@@ -20,11 +20,11 @@ Auth::routes();
 Route::get('/seller/register','UserController@sellerRegister')->name('seller.register');
 
 Route::middleware(['admin'])->group(function (){
-    Route::get('/admin','UserController@adminIndex')->name('admin.index');
+    Route::get('/admin/dashboard','UserController@adminIndex')->name('admin.index');
 });
 
 Route::middleware(['seller','sellerActive'])->group(function (){
-    Route::get('/seller','UserController@sellerIndex')->name('seller.index');
+    Route::get('/seller/dashboard','UserController@sellerIndex')->name('seller.index');
 });
 Route::get('/seller/inactive','UserController@sellerInactive')->name('seller.inactive')->middleware('seller');
 
