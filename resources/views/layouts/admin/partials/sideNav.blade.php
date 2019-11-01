@@ -4,7 +4,7 @@
             <li class="active">
                 <a href="{{route('admin.index')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
             </li>
-            <li class="menu-title">UI elements</li><!-- /.menu-title -->
+            <li class="menu-title">Manage Category</li><!-- /.menu-title -->
             <li class="menu-item-has-children dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="menu-icon fa fa-cogs"></i>Components</a>

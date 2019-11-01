@@ -24,7 +24,13 @@ Route::middleware(['admin'])->group(function (){
 });
 
 Route::middleware(['seller','sellerActive'])->group(function (){
+    //get methods
     Route::get('/seller/dashboard','UserController@sellerIndex')->name('seller.index');
+    Route::get('/product-category/all','ProductCategoryController@index')->name('category.index');
+
+    //post methods
+    Route::post('/product-category/all','ProductCategoryController@store')->name('category.add');
+
 });
 Route::get('/seller/inactive','UserController@sellerInactive')->name('seller.inactive')->middleware('seller');
 
