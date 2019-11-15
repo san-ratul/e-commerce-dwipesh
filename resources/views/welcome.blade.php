@@ -1,100 +1,547 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+@section('content')
+<div class="pl-200 pr-200 overflow clearfix">
+    <div class="categori-menu-slider-wrapper clearfix">
+        @include('layouts.partials.categories')
+        @include('layouts.partials.slider')
+    </div>
+</div>
+<div class="electro-product-wrapper wrapper-padding pt-95 pb-45">
+    <div class="container-fluid">
+        <div class="section-title-4 text-center mb-40">
+            <h2>Top Products</h2>
+        </div>
+        <div class="top-product-style">
+            <div class="product-tab-list3 text-center mb-80 nav product-menu-mrg" role="tablist">
+                <a class="active" href="#electro1" data-toggle="tab" role="tab">
+                    <h4>Fiction </h4>
+                </a>
+                <a href="#electro2" data-toggle="tab" role="tab">
+                    <h4>Satire </h4>
+                </a>
+                <a href="#electro3" data-toggle="tab" role="tab">
+                    <h4>Anthologies</h4>
+                </a>
+            </div>
+            <div class="tab-content">
 
-        <title>Laravel</title>
+                <div class="tab-pane active show fade" id="electro1" role="tabpanel">
+                    <div class="custom-row-2">
+                        @if(isset($products) && !$products->isEmpty())
+                        @foreach($products as $product)
+                        <div class="custom-col-style-2 custom-col-4">
+                            <div class="product-wrapper product-border mb-24">
+                                <div class="product-img-3">
+                                    <a  href="{{route('product.details',$product->id)}}">
+                                        <img src="{{$product->image[0]->image}}" alt="">
+                                    </a>
+                                    <div class="product-action-right">
+                                        <a class="animate-right" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                            <i class="pe-7s-look"></i>
+                                        </a>
+                                        <a class="animate-top" title="Add To Cart" href="#">
+                                            <i class="pe-7s-cart"></i>
+                                        </a>
+                                        <a class="animate-left" title="Wishlist" href="#">
+                                            <i class="pe-7s-like"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-content-4 text-center">
+                                    <div class="product-rating-4">
+                                        <i class="icofont icofont-star yellow"></i>
+                                        <i class="icofont icofont-star yellow"></i>
+                                        <i class="icofont icofont-star yellow"></i>
+                                        <i class="icofont icofont-star yellow"></i>
+                                        <i class="icofont icofont-star"></i>
+                                    </div>
+                                    <h4><a href="#">{{substr($product->description,0,20)}}....</a></h4>
+                                    <span>{{$product->name}}</span>
+                                    <span>{{$product->company_name}}</span>
+                                    <h5>{{$product->price}} &#2547; </h5>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        @else
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                        <div class="alert alert-danger">No product Found</div>
                         @endif
-                    @endauth
-                </div>
-            @endif
+                    </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+    <div class="banner-area wrapper-padding pt-30 pb-95">
+        <div class="container-fluid">
+            <div class="electro-fexible-banner bg-img" style="background-image: url(frontend/img/banner/19.jpg)">
+                <div class="fexible-content">
+                    <h3>Play with flexible</h3>
+                    <p>Multicontrol Smooth Controller, Black Color All Buttons
+                        <br>are somooth, Super Shine.</p>
+                    <a class="btn-hover flexible-btn" href="product-details.html">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="best-selling-area pb-95">
+        <div class="section-title-4 text-center mb-60">
+            <h2>Best Selling</h2>
+        </div>
+        <div class="best-selling-product">
+            <div class="row no-gutters">
+                <div class="col-lg-5">
+                    <div class="best-selling-left">
+                        <div class="product-wrapper">
+                            <div class="product-img-4">
+                                <a href="#"><img src="frontend/img/product/electro/9.jpg" alt=""></a>
+                                <div class="product-action-right">
+                                    <a class="animate-top" title="Add To Cart" href="#">
+                                        <i class="pe-7s-cart"></i>
+                                    </a>
+                                    <a class="animate-left" title="Wishlist" href="#">
+                                        <i class="pe-7s-like"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product-content-5 text-center">
+                                <div class="product-rating-4">
+                                    <i class="icofont icofont-star yellow"></i>
+                                    <i class="icofont icofont-star yellow"></i>
+                                    <i class="icofont icofont-star yellow"></i>
+                                    <i class="icofont icofont-star yellow"></i>
+                                    <i class="icofont icofont-star yellow"></i>
+                                </div>
+                                <h4><a href="product-details.html">desktop C27F551</a></h4>
+                                <span>Headphone</span>
+                                <h5>$133.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="best-selling-right">
+                        <div class="custom-container">
+                            <div class="coustom-row-3">
+                                <div class="custom-col-style-3 custom-col-3">
+                                    <div class="product-wrapper mb-6">
+                                        <div class="product-img-4">
+                                            <a href="#">
+                                                <img src="frontend/img/product/electro/10.jpg" alt="">
+                                            </a>
+                                            <div class="product-action-right">
+                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                    <i class="pe-7s-cart"></i>
+                                                </a>
+                                                <a class="animate-left" title="Wishlist" href="#">
+                                                    <i class="pe-7s-like"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-6">
+                                            <div class="product-rating-4">
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                            </div>
+                                            <h4><a href="product-details.html">Play Station</a></h4>
+                                            <h5>$145.00</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="custom-col-style-3 custom-col-3">
+                                    <div class="product-wrapper mb-6">
+                                        <div class="product-img-4">
+                                            <a href="#">
+                                                <img src="frontend/img/product/electro/11.jpg" alt="">
+                                            </a>
+                                            <div class="product-action-right">
+                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                    <i class="pe-7s-cart"></i>
+                                                </a>
+                                                <a class="animate-left" title="Wishlist" href="#">
+                                                    <i class="pe-7s-like"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-6">
+                                            <div class="product-rating-4">
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                            </div>
+                                            <h4><a href="product-details.html">Joy Stick</a></h4>
+                                            <h5>$145.00</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="custom-col-style-3 custom-col-3">
+                                    <div class="product-wrapper mb-6">
+                                        <div class="product-img-4">
+                                            <a href="#">
+                                                <img src="frontend/img/product/electro/12.jpg" alt="">
+                                            </a>
+                                            <div class="product-action-right">
+                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                    <i class="pe-7s-cart"></i>
+                                                </a>
+                                                <a class="animate-left" title="Wishlist" href="#">
+                                                    <i class="pe-7s-like"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-6">
+                                            <div class="product-rating-4">
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                            </div>
+                                            <h4><a href="product-details.html">Awesome Tab</a></h4>
+                                            <h5>$145.00</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="custom-col-style-3 custom-col-3">
+                                    <div class="product-wrapper mb-6">
+                                        <div class="product-img-4">
+                                            <a href="#">
+                                                <img src="frontend/img/product/electro/13.jpg" alt="">
+                                            </a>
+                                            <div class="product-action-right">
+                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                    <i class="pe-7s-cart"></i>
+                                                </a>
+                                                <a class="animate-left" title="Wishlist" href="#">
+                                                    <i class="pe-7s-like"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-6">
+                                            <div class="product-rating-4">
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star"></i>
+                                            </div>
+                                            <h4><a href="product-details.html">Trimmer C27F401</a></h4>
+                                            <h5>$145.00</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="custom-col-style-3 custom-col-3">
+                                    <div class="product-wrapper mb-6">
+                                        <div class="product-img-4">
+                                            <a href="#">
+                                                <img src="frontend/img/product/electro/14.jpg" alt="">
+                                            </a>
+                                            <div class="product-action-right">
+                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                    <i class="pe-7s-cart"></i>
+                                                </a>
+                                                <a class="animate-left" title="Wishlist" href="#">
+                                                    <i class="pe-7s-like"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-6">
+                                            <div class="product-rating-4">
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                            </div>
+                                            <h4><a href="product-details.html">Timer C27F500</a></h4>
+                                            <h5>$145.00</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="custom-col-style-3 custom-col-3">
+                                    <div class="product-wrapper mb-6">
+                                        <div class="product-img-4">
+                                            <a href="#">
+                                                <img src="frontend/img/product/electro/15.jpg" alt="">
+                                            </a>
+                                            <div class="product-action-right">
+                                                <a class="animate-top" title="Add To Cart" href="#">
+                                                    <i class="pe-7s-cart"></i>
+                                                </a>
+                                                <a class="animate-left" title="Wishlist" href="#">
+                                                    <i class="pe-7s-like"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-6">
+                                            <div class="product-rating-4">
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star yellow"></i>
+                                                <i class="icofont icofont-star"></i>
+                                            </div>
+                                            <h4><a href="product-details.html">Joy Stick</a></h4>
+                                            <h5>$145.00</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="androit-banner-wrapper wrapper-padding pb-175">
+        <div class="container-fluid">
+            <div class="androit-banner-img bg-img" style="background-image: url(frontend/img/banner/36.jpg)">
+                <div class="androit-banner-content">
+                    <h3>Xolo Fast T2 Smartphone, Android <br>7.0 Unlocked.</h3>
+                    <a href="product-details.html">Buy Now →</a>
+                </div>
+                <div class="banner-price text-center">
+                    <div class="banner-price-position">
+                        <span class="banner-price-new">$125.00</span>
+                        <span class="banner-price-old">$199.00</span>
+                    </div>
+                </div>
+                <div class="phn-img">
+                    <img src="frontend/img/banner/10.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-area-2 wrapper-padding pb-70">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-xl-4">
+                    <div class="product-wrapper product-wrapper-border mb-30">
+                        <div class="product-img-5">
+                            <a href="#">
+                                <img src="frontend/img/product/electro/16.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-7">
+                            <h4><a href="#">Autel Robotics - X-Star Premium Quadcopter</a></h4>
+                            <div class="product-rating-4">
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star"></i>
+                            </div>
+                            <h5>$499.00</h5>
+                            <div class="product-action-electro">
+                                <a class="animate-top" title="Add To Cart" href="#">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                                <a class="animate-left" title="Wishlist" href="#">
+                                    <i class="pe-7s-like"></i>
+                                </a>
+                                <a class="animate-right" title="Compare" data-toggle="modal" data-target="#exampleCompare" href="#">
+                                    <i class="pe-7s-repeat"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="product-wrapper product-wrapper-border mb-30">
+                        <div class="product-img-5">
+                            <a href="#">
+                                <img src="frontend/img/product/electro/17.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-7">
+                            <h4><a href="#">Autel Robotics - X-Star Premium Quadcopter</a></h4>
+                            <div class="product-rating-4">
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star"></i>
+                            </div>
+                            <h5>$499.00</h5>
+                            <div class="product-action-electro">
+                                <a class="animate-top" title="Add To Cart" href="#">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                                <a class="animate-left" title="Wishlist" href="#">
+                                    <i class="pe-7s-like"></i>
+                                </a>
+                                <a class="animate-right" title="Compare" data-toggle="modal" data-target="#exampleCompare" href="#">
+                                    <i class="pe-7s-repeat"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="product-wrapper product-wrapper-border mb-30">
+                        <div class="product-img-5">
+                            <a href="#">
+                                <img src="frontend/img/product/electro/18.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-7">
+                            <h4><a href="#">Autel Robotics - X-Star Premium Quadcopter</a></h4>
+                            <div class="product-rating-4">
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star"></i>
+                            </div>
+                            <h5>$499.00</h5>
+                            <div class="product-action-electro">
+                                <a class="animate-top" title="Add To Cart" href="#">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                                <a class="animate-left" title="Wishlist" href="#">
+                                    <i class="pe-7s-like"></i>
+                                </a>
+                                <a class="animate-right" title="Compare" data-toggle="modal" data-target="#exampleCompare" href="#">
+                                    <i class="pe-7s-repeat"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="product-wrapper product-wrapper-border mb-30">
+                        <div class="product-img-5">
+                            <a href="#">
+                                <img src="frontend/img/product/electro/19.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-7">
+                            <h4><a href="#">Autel Robotics - X-Star Premium Quadcopter</a></h4>
+                            <div class="product-rating-4">
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star"></i>
+                            </div>
+                            <h5>$499.00</h5>
+                            <div class="product-action-electro">
+                                <a class="animate-top" title="Add To Cart" href="#">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                                <a class="animate-left" title="Wishlist" href="#">
+                                    <i class="pe-7s-like"></i>
+                                </a>
+                                <a class="animate-right" title="Compare" data-toggle="modal" data-target="#exampleCompare" href="#">
+                                    <i class="pe-7s-repeat"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="product-wrapper product-wrapper-border mb-30">
+                        <div class="product-img-5">
+                            <a href="#">
+                                <img src="frontend/img/product/electro/20.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-7">
+                            <h4><a href="#">Autel Robotics - X-Star Premium Quadcopter</a></h4>
+                            <div class="product-rating-4">
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star"></i>
+                            </div>
+                            <h5>$499.00</h5>
+                            <div class="product-action-electro">
+                                <a class="animate-top" title="Add To Cart" href="#">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                                <a class="animate-left" title="Wishlist" href="#">
+                                    <i class="pe-7s-like"></i>
+                                </a>
+                                <a class="animate-right" title="Compare" data-toggle="modal" data-target="#exampleCompare" href="#">
+                                    <i class="pe-7s-repeat"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4">
+                    <div class="product-wrapper product-wrapper-border mb-30">
+                        <div class="product-img-5">
+                            <a href="#">
+                                <img src="frontend/img/product/electro/21.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-7">
+                            <h4><a href="#">Autel Robotics - X-Star Premium Quadcopter</a></h4>
+                            <div class="product-rating-4">
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star yellow"></i>
+                                <i class="icofont icofont-star"></i>
+                            </div>
+                            <h5>$499.00</h5>
+                            <div class="product-action-electro">
+                                <a class="animate-top" title="Add To Cart" href="#">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                                <a class="animate-left" title="Wishlist" href="#">
+                                    <i class="pe-7s-like"></i>
+                                </a>
+                                <a class="animate-right" title="Compare" data-toggle="modal" data-target="#exampleCompare" href="#">
+                                    <i class="pe-7s-repeat"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="brand-logo-area-2 wrapper-padding ptb-80">
+        <div class="container-fluid">
+            <div class="brand-logo-active2 owl-carousel">
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/7.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/8.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/9.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/10.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/11.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/12.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/13.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/7.png" alt="">
+                </div>
+                <div class="single-brand">
+                    <img src="frontend/img/brand-logo/8.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    @endsection

@@ -1,5 +1,4 @@
 @extends('layouts.seller.app')
-
 @section('content')
     <div class="row">
         <div class="col-md-4">
@@ -65,7 +64,7 @@
                             <h3 class="text-center ">All Category</h3>
                         </div>
                         <hr>
-                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <table id="category" class="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -80,7 +79,13 @@
                                     <td>{{$category->name}}</td>
                                     <td>{{$category->slug}}</td>
                                     <td>{{($category->parent)?$category->parent->name:'-'}}</td>
-                                    <td></td>
+                                <td><a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-sm">Edit</a>  
+                                    <form action="{{route('category.delete',$category->id)}}" method="post" style="margin:5px;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="delete" class="btn btn-danger btn btn-sm">
+                                    </form>
+                                  </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -101,7 +106,7 @@
     <script type="text/javascript">
         var $ = jQuery;
         $(document).ready(function() {
-            $('#bootstrap-data-table-export').DataTable();
+            $('#category').DataTable();
         } );
     </script>
 @endsection

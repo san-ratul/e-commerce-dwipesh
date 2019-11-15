@@ -7,24 +7,8 @@
             <li class="menu-title">Product Management</li><!-- /.menu-title -->
             <li>
                 <a href="{{route('category.index')}}"><i class="menu-icon fa fa-tasks"></i>Category </a>
+                <a href="{{route('product.add')}}"><i class="menu-icon fa fa-plus"></i>Add Product</a>
             </li>
-            <li class="menu-item-has-children dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-table"></i>Tables</a>
-                <ul class="sub-menu children dropdown-menu">
-                    <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                    <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
-                </ul>
-            </li>
-            <li class="menu-item-has-children dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-th"></i>Forms</a>
-                <ul class="sub-menu children dropdown-menu">
-                    <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                    <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                </ul>
-            </li>
-
             <li class="menu-title">Icons</li><!-- /.menu-title -->
 
             <li class="menu-item-has-children dropdown">

@@ -20,6 +20,7 @@
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('admin/css/lib/datatable/dataTables.bootstrap.min.css')}}">
 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('admin/css/user-css.css')}}">
@@ -106,8 +107,8 @@
     </div>
     <!-- /#right-panel -->
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.1.1.js"
+      <!-- Scripts -->
+      <script src="https://code.jquery.com/jquery-3.1.1.js"
         integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
@@ -124,6 +125,17 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="{{asset('admin/js/init/fullcalendar-init.js')}}"></script>
+
+    <script src="{{asset('admin/js/lib/data-table/datatables.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/jszip.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/vfs_fonts.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.print.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.colVis.min.js')}}"></script>
+    <script src="{{asset('admin/js/init/datatables-init.js')}}"></script>
     <script>
         jQuery(document).ready(function(){
             var height = jQuery(document).height()-jQuery('#header').outerHeight()-jQuery('.site-footer').outerHeight();
@@ -134,6 +146,7 @@
             jQuery('.content').css('min-height',height+'px');
         });
     </script>
+    @yield('scripts')
 </body>
 
 </html>

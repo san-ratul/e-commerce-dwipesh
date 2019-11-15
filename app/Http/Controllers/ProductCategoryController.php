@@ -36,11 +36,12 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request,[
             'name' => ['required','string','max:255'],
-            'slug' => ['required','string','max:255'],
-            'parent_id' => ['unique:product_categories'],
+            'slug' => ['required','string','max:255','unique:product_categories'],
         ]);
+
         if($request->parent_id == ''){
             $category = ProductCategory::create([
                 'name' => $request->name,
@@ -73,9 +74,10 @@ class ProductCategoryController extends Controller
      * @param  \App\ProductCategory  $productCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductCategory $productCategory)
+    public function edit(ProductCategory $category)
     {
-        //
+      $categories = ProductCategory::all();
+       return view('seller.category.editCategory',compact('category','categories'));
     }
 
     /**
@@ -85,9 +87,33 @@ class ProductCategoryController extends Controller
      * @param  \App\ProductCategory  $productCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductCategory $productCategory)
+    public function update(Request $request,ProductCategory $category)
     {
-        //
+        
+        if($category->slug == $request->slug){
+            $this->validate($request,[
+                'name' => ['required','string','max:255'],
+            ]);
+        }else{
+            $this->validate($request,[
+                'name' => ['required','string','max:255'],
+                'slug' => ['required','string','max:255','unique:product_categories'],
+            ]);
+        }
+        
+        if($request->parent_id == ''){
+            $category->update([
+                'name' => $request->name,
+                'slug' => $request->slug,
+            ]);
+        }else{
+            $category->update([
+                'name' => $request->name,
+                'slug' => $request->slug,
+                'parent_id' => $request->parent_id,
+            ]);
+        }
+        return redirect()->route('category.index')->with('status','Category Updated Successfully');
     }
 
     /**
@@ -96,8 +122,10 @@ class ProductCategoryController extends Controller
      * @param  \App\ProductCategory  $productCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductCategory $productCategory)
+    public function destroy(ProductCategory $category)
     {
-        //
+       
+        $category->delete();
+        return redirect()->route('category.index')->with('status','Category Deleted successfully!');
     }
 }
