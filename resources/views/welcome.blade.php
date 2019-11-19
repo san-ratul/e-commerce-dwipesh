@@ -9,72 +9,41 @@
 <div class="electro-product-wrapper wrapper-padding pt-95 pb-45">
     <div class="container-fluid">
         <div class="section-title-4 text-center mb-40">
-            <h2>Top Products</h2>
+            <h2>Latest Products</h2>
         </div>
         <div class="top-product-style">
-            <div class="product-tab-list3 text-center mb-80 nav product-menu-mrg" role="tablist">
-                <a class="active" href="#electro1" data-toggle="tab" role="tab">
-                    <h4>Fiction </h4>
-                </a>
-                <a href="#electro2" data-toggle="tab" role="tab">
-                    <h4>Satire </h4>
-                </a>
-                <a href="#electro3" data-toggle="tab" role="tab">
-                    <h4>Anthologies</h4>
-                </a>
-            </div>
-            <div class="tab-content">
 
-                <div class="tab-pane active show fade" id="electro1" role="tabpanel">
-                    <div class="custom-row-2">
-                        @if(isset($products) && !$products->isEmpty())
-                        @foreach($products as $product)
-                        <div class="custom-col-style-2 custom-col-4">
-                            <div class="product-wrapper product-border mb-24">
-                                <div class="product-img-3">
-                                    <a  href="{{route('product.details',$product->id)}}">
-                                        <img src="{{$product->image[0]->image}}" alt="">
-                                    </a>
-                                    <div class="product-action-right">
-                                        <a class="animate-right" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                            <i class="pe-7s-look"></i>
-                                        </a>
-                                        <a class="animate-top" title="Add To Cart" href="#">
-                                            <i class="pe-7s-cart"></i>
-                                        </a>
-                                        <a class="animate-left" title="Wishlist" href="#">
-                                            <i class="pe-7s-like"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="product-content-4 text-center">
-                                    <div class="product-rating-4">
-                                        <i class="icofont icofont-star yellow"></i>
-                                        <i class="icofont icofont-star yellow"></i>
-                                        <i class="icofont icofont-star yellow"></i>
-                                        <i class="icofont icofont-star yellow"></i>
-                                        <i class="icofont icofont-star"></i>
-                                    </div>
-                                    <h4><a href="#">{{substr($product->description,0,20)}}....</a></h4>
-                                    <span>{{$product->name}}</span>
-                                    <span>{{$product->company_name}}</span>
-                                    <h5>{{$product->price}} &#2547; </h5>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                        @else
-
-                        <div class="alert alert-danger">No product Found</div>
-                        @endif
+            @if(isset($products) && !$products->isEmpty())
+            @foreach($products as $product)
+            <div class="custom-col-style-2 custom-col-4">
+                <div class="product-wrapper product-border mb-24">
+                    <div class="product-img-3">
+                        <a href="{{route('product.details',$product->id)}}">
+                            <img src="{{$product->image[0]->image}}" alt="">
+                        </a>
                     </div>
-
-
+                    <div class="product-content-4 text-center">
+                        <div class="product-rating-4">
+                            <i class="icofont icofont-star yellow"></i>
+                            <i class="icofont icofont-star yellow"></i>
+                            <i class="icofont icofont-star yellow"></i>
+                            <i class="icofont icofont-star yellow"></i>
+                            <i class="icofont icofont-star"></i>
+                        </div>
+                        <h4><a href="{{route('product.details',$product->id)}}">{{substr($product->description,0,20)}}....</a></h4>
+                        <span>{{$product->name}}</span>
+                        <span>{{$product->company_name}}</span>
+                        <h5>{{$product->price}} &#2547; </h5>
+                    </div>
                 </div>
             </div>
+            @endforeach
+            @else
+            <div class="alert alert-danger">No product Found</div>
+            @endif
         </div>
     </div>
-    
+
     <div class="best-selling-area pb-95">
         <div class="section-title-4 text-center mb-60">
             <h2>Best Selling</h2>
@@ -289,8 +258,8 @@
             </div>
         </div>
     </div>
-   
- 
+
+
     <div class="brand-logo-area-2 wrapper-padding ptb-80">
         <div class="container-fluid">
             <div class="brand-logo-active2 owl-carousel">

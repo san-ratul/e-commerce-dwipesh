@@ -15,6 +15,10 @@ Route::get('/','HomeController@welcome')->name('/');
 Auth::routes();
 Route::get('/seller/register','UserController@sellerRegister')->name('seller.register');
 Route::get('/home/product-details/{product}','ProductController@show')->name('product.details');
+Route::post('/add-to-cart/{product}', 'OrderController@addCart')->name('cart.add');
+Route::patch('/update-cart/{product}', 'OrderController@updateCart')->name('cart.update');
+Route::delete('/delete-cart/{product}', 'OrderController@destroyCart')->name('cart.delete');
+Route::get('/cart', 'OrderController@showCart')->name('cart.show');
 
 Route::middleware(['admin'])->group(function (){
     Route::get('/admin/dashboard','UserController@adminIndex')->name('admin.index');
