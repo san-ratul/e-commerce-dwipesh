@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\User;
 use App\ProductCategory;
 use App\Image;
 use Illuminate\Support\Facades\Auth;
@@ -78,7 +79,11 @@ class ProductController extends Controller
     {
         //
     }
-
+    public function delete(Product $product)
+    {
+        $product->delete();
+          return redirect()->back()->with('status', 'Product Deleted Successfully');
+    }
     /**
      * Display the specified resource.
      *
@@ -123,5 +128,15 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+    public function productShowAdmin(User $user)
+    {
+        $products = Product::where('seller_id',$user->id)->get();
+        return view('admin.allProduct.showProduct',compact('products','user'));
+    }
+    public function productShowseller(User $user)
+    {
+        $products=Product::where('seller_id',$user->id)->get();
+        return view('seller.product.productShow',compact('products','user'));
     }
 }

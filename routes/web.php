@@ -20,9 +20,15 @@ Route::middleware(['admin'])->group(function (){
     Route::get('/admin/dashboard','UserController@adminIndex')->name('admin.index');
     Route::get('/admin/seller-list','UserController@allSeller')->name('activeseller.list');
     Route::get('/admin/Inactive-seller-list','UserController@allInactiveSeller')->name('inactiveseller.list');
+    Route::get('/admin/all-seller-list','UserController@allSellerLIst')->name('admin.sellerList');
+    Route::get('/admin/profile/{user}','UserController@adminProfile')->name('admin.profile');
+    Route::get('/admin/profile-edit/{user}','UserController@editAdmin')->name('admin.profileEdit');
+    Route::get('/admin/show-product/{user}','ProductController@productShowAdmin')->name('admin.showPorduct');
     //patch methods
     Route::patch('admin/seller/{user}/active','UserController@activeSeller')->name('active.seller');
     Route::patch('admin/seller/{user}/deactive','UserController@deactiveSeller')->name('deactive.seller');
+    Route::patch('admin/profile-update/{user}','UserController@updateAdmin')->name('admin.update');
+    Route::delete('admin/delete-product/{product}','ProductController@delete')->name('admin.deleteproduct');
 });
 
 Route::middleware(['seller','sellerActive'])->group(function (){
@@ -31,6 +37,7 @@ Route::middleware(['seller','sellerActive'])->group(function (){
     Route::get('/product-category/all','ProductCategoryController@index')->name('category.index');
     Route::get('/product-category/edit/{category}','ProductCategoryController@edit')->name('category.edit');
     Route::get('/product-add-product','ProductController@index')->name('product.add');
+    Route::get('seller/product-show/{user}','ProductController@productShowseller')->name('seller.product');
 
     //post methods
     Route::post('/product-category/all','ProductCategoryController@store')->name('category.add');
