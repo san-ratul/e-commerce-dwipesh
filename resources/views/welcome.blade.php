@@ -32,7 +32,7 @@
                         <div class="custom-col-style-2 custom-col-4">
                             <div class="product-wrapper product-border mb-24">
                                 <div class="product-img-3">
-                                    <a  href="{{route('product.details',$product->id)}}">
+                                    <a href="{{route('product.details',$product->id)}}">
                                         <img src="{{$product->image[0]->image}}" alt="">
                                     </a>
                                     <div class="product-action-right">
@@ -55,9 +55,9 @@
                                         <i class="icofont icofont-star yellow"></i>
                                         <i class="icofont icofont-star"></i>
                                     </div>
-                                    <h4><a href="#">{{substr($product->description,0,20)}}....</a></h4>
-                                    <span>{{$product->name}}</span>
-                                    <span>{{$product->company_name}}</span>
+                                    <h4><a href="{{route('product.details',$product->id)}}">{{substr($product->description,0,20)}}....</a></h4>
+                                    <span href="{{route('product.details',$product->id)}}">{{$product->name}}</span>
+                                    <span href="{{route('product.details',$product->id)}}">{{$product->company_name}}</span>
                                     <h5>{{$product->price}} &#2547; </h5>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="best-selling-area pb-95">
         <div class="section-title-4 text-center mb-60">
             <h2>Best Selling</h2>
@@ -289,8 +289,8 @@
             </div>
         </div>
     </div>
-   
- 
+
+
     <div class="brand-logo-area-2 wrapper-padding ptb-80">
         <div class="container-fluid">
             <div class="brand-logo-active2 owl-carousel">

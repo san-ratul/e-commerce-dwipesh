@@ -39,6 +39,7 @@ Route::middleware(['seller','sellerActive'])->group(function (){
     Route::get('/product-add-product','ProductController@index')->name('product.add');
     Route::get('seller/product-show/{user}','ProductController@productShowseller')->name('seller.product');
 
+
     //post methods
     Route::post('/product-category/all','ProductCategoryController@store')->name('category.add');
     Route::post('/product-add-product','ProductController@create')->name('product.store');

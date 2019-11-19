@@ -310,10 +310,6 @@
                             <label>Size*</label>
                             <select class="select">
                                 <option value="">- Please Select -</option>
-                                <option value="">xl</option>
-                                <option value="">ml</option>
-                                <option value="">m</option>
-                                <option value="">sl</option>
                             </select>
                         </div>
                         <div class="select-option-part">
@@ -352,41 +348,6 @@
                                 <li><a href="#">{{$category}} >></a></li>
                             @endforeach
                             
-                        </ul>
-                    </div>
-                    <div class="product-details-cati-tag mtb-10">
-                        <ul>
-                            <li class="categories-title">Tags :</li>
-                            <li><a href="#">fashion</a></li>
-                            <li><a href="#">electronics</a></li>
-                            <li><a href="#">toys</a></li>
-                            <li><a href="#">food</a></li>
-                            <li><a href="#">jewellery</a></li>
-                        </ul>
-                    </div>
-                    <div class="product-share">
-                        <ul>
-                            <li class="categories-title">Share :</li>
-                            <li>
-                                <a href="#">
-                                    <i class="icofont icofont-social-facebook"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icofont icofont-social-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icofont icofont-social-pinterest"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icofont icofont-social-flikr"></i>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>

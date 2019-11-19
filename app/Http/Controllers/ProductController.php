@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\User;
+use App\ProductDetails;
 use App\ProductCategory;
 use App\Image;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = ProductCategory::all();
-        return view('seller.product.addProduct',compact('categories'));
+        return view('seller.product.addProduct',compact('categories','product_details'));
     }
 
     /**
@@ -38,7 +39,10 @@ class ProductController extends Controller
             'quantity' => ['required'],
             'description' => ['required', 'string'], 
             'filename' => 'required',
-            'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'color' => ['required','string','max:255'],
+            'size' => ['required','string','max:255'],
+            'model' => ['required','string','max:255',],
         ]);
         $product = Product::create([
             'name' => $request['name'],
@@ -48,6 +52,13 @@ class ProductController extends Controller
             'price' => $request['price'],
             'description' => $request['description'],
             'seller_id' =>$seller->id,
+            
+        ]);
+        $productDetails = ProductDetails::create([
+            'color' => $request['color'],
+            'size' => $request['size'],
+            'model' => $request['model'],
+            'product_id' =>$product->id,
             
         ]);
         if($request->hasFile('filename')){
