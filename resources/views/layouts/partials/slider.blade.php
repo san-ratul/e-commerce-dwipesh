@@ -86,7 +86,7 @@ $products = App\Product::latest()->take(3)->get();
         <div class="slider-active owl-carousel">
         @if(!$products->isEmpty())
         @foreach($products as $product)
-            <div class="single-slider single-slider-hm3 bg-img pt-170 pb-173" style="background-image: url('{{$product->image[0]->image}}')">
+            <div class="single-slider single-slider-hm3 bg-img pt-170 pb-173" style="background-image: url('{{$product->image[0]->image}}');height:668px;">
                 <div class="slider-animation slider-content-style-3 fadeinup-animated">
                     <h2 class="animated" style="color:#fff">{{$product->name}}</h2>
                     <h4 class="animated" style="color:#fff">Company Name: {{$product->company_name}}</h4>

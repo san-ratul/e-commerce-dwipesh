@@ -1,7 +1,7 @@
 <header id="header" class="header">
     <div class="top-left">
         <div class="navbar-header">
-            <a class="navbar-brand" href="./">Eazy Bazar</a>
+            <a class="navbar-brand" style="font-weight:bold;font-size:24px" href="{{url('/')}}">{{ config('app.name', 'Laravel') }}</a>
             <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>
     </div>
@@ -13,7 +13,7 @@
                     <p class="user-avatar rounded-circle ec-user-avatar">{{auth()->user()->name[0]}}</p>
                 </a>
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
+                    <a class="nav-link" href="{{route('seller.profile',auth()->user()->id)}}"><i class="fa fa-user"></i>My Profile</a>
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                         <i class="fa fa-power-off"></i>Logout</a>

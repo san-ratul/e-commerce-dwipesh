@@ -15,8 +15,8 @@ class CreateProductDetailsTable extends Migration
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('color');
-            $table->string('size');
+            $table->string('color')->nullable();;
+            $table->string('size')->nullable();
             $table->string('model');
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');

@@ -88,5 +88,33 @@ class UserController extends Controller
         $users = User::where('is_seller',true)->get();
         return view('admin.seller.sellerList',compact('users'));
     }
+    public function sellerProfile(User $user)
+    {
+
+       return view('seller.profile.sellerProfile',compact('user'));
+    }
+    public function editSeller(User $user){
+        return view('seller.profile.updateProfile',compact('user'));
+    }
+    protected function updateSeller(Request $request, User $user)
+    {
+        $this->validate($request,[
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
+            'password' => [ 'string', 'max:255','nullable'],
+            'phone' => ['required', 'max:255'],
+        ]);
+       $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+        ]);
+        if($request->password != null){
+            $user->password = Hash::make($request['password']);
+            $user->save();
+        }
+
+        return redirect()->route('seller.profile',$user->id)->with('status','Seller Updated successfully!');
+    }
     
 }

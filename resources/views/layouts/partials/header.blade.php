@@ -21,7 +21,7 @@
     <div class="header-bottom pt-40 pb-30 clearfix">
         <div class="header-bottom-wrapper pr-200 pl-200">
             <div class="logo-3">
-                <a href="index.html">
+                <a href="{{url('/')}}">
                     <!-- <img src="frontend/img/logo/logo-3.png" alt="" > -->
                     <h2 style="font-weight:bold;">Easy Bazar</h2>
                 </a>
