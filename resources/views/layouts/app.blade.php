@@ -1,4 +1,7 @@
+<?php
+    $cart['total_items'] = count(\Cart::getContent());
 
+?>
 <!doctype html>
 <html class="no-js" lang="en">
 

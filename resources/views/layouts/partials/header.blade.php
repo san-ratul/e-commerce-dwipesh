@@ -10,10 +10,8 @@
             <div class="electronics-login-register">
                 <ul>
                     <li><a href="{{route('login')}}"><i class="pe-7s-users"></i>My Account</a></li>
-                    <li><a data-toggle="modal" data-target="#exampleCompare" href="#"><i class="pe-7s-repeat"></i>Compare</a></li>
-                    <li><a href="wishlist.html"><i class="pe-7s-like"></i>Wishlist</a></li>
-                    <li><a href="#"><i class="pe-7s-flag"></i>US</a></li>
-                    <li><a class="border-none" href="#"><span>$</span>USD</a></li>
+                    <li><a href="#"><i class="pe-7s-flag"></i>BD</a></li>
+                    <li><a class="border-none" href="#"><span>$</span>BDT</a></li>
                 </ul>
             </div>
         </div>
@@ -21,9 +19,9 @@
     <div class="header-bottom pt-40 pb-30 clearfix">
         <div class="header-bottom-wrapper pr-200 pl-200">
             <div class="logo-3">
-                <a href="index.html">
+                <a href="{{url('/')}}">
                     <!-- <img src="frontend/img/logo/logo-3.png" alt="" > -->
-                    <h2 style="font-weight:bold;">Easy Bazar</h2>
+                    <h2 style="font-weight:bold;">{{ config('app.name', 'Laravel') }}</h2>
                 </a>
             </div>
             <div class="categories-search-wrapper">
@@ -49,20 +47,12 @@
                 </div>
             </div>
             <div class="trace-cart-wrapper">
-                <div class="trace same-style">
-                    <div class="same-style-icon">
-                        <a href="#"><i class="pe-7s-plane"></i></a>
-                    </div>
-                    <div class="same-style-text">
-                        <a href="#">Product <br>trace</a>
-                    </div>
-                </div>
                 <div class="categories-cart same-style">
                     <div class="same-style-icon">
                         <a href="#"><i class="pe-7s-cart"></i></a>
                     </div>
                     <div class="same-style-text">
-                        <a href="cart.html">My Cart <br>02 Item</a>
+                        <a href="{{route('cart.show')}}">My Cart <br>{{$cart['total_items']}} Item</a>
                     </div>
                 </div>
             </div>
