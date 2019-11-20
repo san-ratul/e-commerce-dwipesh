@@ -5,18 +5,19 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3>Add Product</h3>
+        <h3>Update Product</h3>
     </div>
     <div class="card-body">
         <div class="container-fluid">
-        <div class="alert alert-info">
+            <div class="alert alert-info">
                 <strong>Please add ',' for multiple color or size</strong>
             </div>
-            <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('product.update',$product->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
                 <div class="form-group">
                     <label for="">Product Name</label>
-                    <input type="name" class="form-control" name="name" placeholder="enter the product name" value="{{ old('name') }}">
+                    <input type="name" class="form-control" name="name" value="{{$product->name}}">
                     @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -25,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Company Name</label>
-                    <input type="text" class="form-control" name="company_name" placeholder="enter the company name" value="{{ old('company_name') }}">
+                    <input type="text" class="form-control" name="company_name" value="{{ $product->company_name }}">
                     @error('company_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -34,11 +35,11 @@
                 </div>
                 <div class="form-group">
                     <label for="category" class="form-control-label">Category</label>
-                    <select name="category_id" id="category" class="form-control" value="{{old('category_id')}}">
+                    <select name="category_id" id="category" class="form-control">
                         <option value="">Please select</option>
                         @if(!$categories->isEmpty())
                         @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        <option value="{{$category->id}}" {{($product->category->id == $category->id)?'selected':''}}>{{$category->name}}</option>
                         @endforeach
                         @endif
                     </select>
@@ -50,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">product Price</label>
-                    <input type="number" class="form-control" name="price" placeholder="enter the product price">
+                    <input type="number" class="form-control" name="price" value="{{$product->price}}">
                     @error('price')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -59,8 +60,8 @@
                 </div>
                 <div class="form-group">
                     <label for="">product quantity</label>
-                    <input type="quantity" class="form-control" name="quantity" placeholder="enter the product quantity">
-                    @error('quantity ')
+                    <input type="quantity" class="form-control" name="quantity" value="{{$product->quantity}}" />
+                    @error('quantity')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -68,7 +69,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Product Color</label>
-                    <input type="text" class="form-control" name="color" placeholder="enter the product color" value="{{ old('color') }}">
+                    <input type="text" class="form-control" name="color" value="{{$product->productDetails->color}}">
                     @error('color')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -77,7 +78,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Size</label>
-                    <input type="text" class="form-control" name="size" placeholder="enter the product size" value="{{ old('size') }}">
+                    <input type="text" class="form-control" name="size" placeholder="enter the product size" value="{{ $product->productDetails->size }}">
                     @error('company_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -86,7 +87,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Product Model</label>
-                    <input type="text" class="form-control" name="model" placeholder="enter the product model">
+                    <input type="text" class="form-control" name="model" value="{{$product->productDetails->model}}">
                     @error('model')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -107,18 +108,38 @@
                         </div>
                     </div>
                 </div>
-           
                 <div class="form-group">
                     <label for="">Description</label>
-                    <textarea type="text" class="form-control" name="description" col="3" row="80"></textarea>
+                    <input type="text" class="form-control" name="description" style="height:80px;" value="{{$product->description}}">
                     @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
+            <div class="card" style="margin-top:20px">
+                <div class="card-header">
+                    <h3>Product Images</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach($product->image as $images)
+                        <div class="col-md-4 text-center">
+                            <img src="{{$images->image}}" style="height:150px;width:200px; margin:10px auto; border:1px solid #888888"/>
+                            <div class="col-md-12 text-center">
+                                <form action="{{route('image.delete',$images->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

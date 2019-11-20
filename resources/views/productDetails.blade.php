@@ -1,3 +1,7 @@
+<?php
+ $sizes= explode(',',$product->productDetails->size);
+ $colors= explode(',',$product->productDetails->color);
+?>
 @extends('layouts.user.partials.detailsTop')
 @section('content')
 <!-- header end -->
@@ -16,7 +20,7 @@
 <div class="product-details ptb-100 pb-90">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 col-lg-7 col-12">
+            <div class="col-md-12 col-lg-5 col-12">
                 <div class="product-details-img-content">
                     <div class="product-details-tab mr-70">
                         <div class="product-details-large tab-content">
@@ -44,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-5 col-12">
+            <div class="col-md-12 col-lg-7 col-12">
                 <div class="product-details-content">
                     <h3>{{$product->name}}</h3>
                     <div class="rating-number">
@@ -62,7 +66,6 @@
                     <div class="details-price">
                         <span>{{$product->price}} BDT</span>
                     </div>
-
                     <form action="{{route('cart.add',$product->id)}}" method="POST">
                         @csrf
                         <div class="quick-view-select">
@@ -70,12 +73,18 @@
                                 <label>Size*</label>
                                 <select class="select" name="size">
                                     <option value="">- Please Select -</option>
+                                    @foreach($sizes as $size)
+                                    <option value="{{$size}}">{{$size}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="select-option-part">
                                 <label>Color*</label>
                                 <select class="select" name="color">
                                     <option value="">- Please Select -</option>
+                                    @foreach($colors as $color)
+                                    <option value="{{$color}}">{{$color}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -102,7 +111,6 @@
                             @foreach($categories as $category)
                             <li><a href="#">{{$category}} >></a></li>
                             @endforeach
-
                         </ul>
                     </div>
                 </div>

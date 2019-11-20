@@ -41,11 +41,11 @@
                         <h3 class="footer-widget-title-3">My Account</h3>
                         <div class="footer-widget-content-3">
                             <ul>
-                                <li><a href="login.html">Login Hare</a></li>
+                                <li><a href="{{route('login')}}">Login Hare</a></li>
                                 <li><a href="cart.html">Cart History</a></li>
                                 <li><a href="checkout.html"> Payment History</a></li>
                                 <li><a href="shop.html">Product Tracking</a></li>
-                                <li><a href="register.html">Register</a></li>
+                                <li><a href="{{route('register')}}">Register</a></li>
                             </ul>
                         </div>
                     </div>
@@ -58,8 +58,6 @@
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="#">Our Service</a></li>
                                 <li><a href="#">Pricing Plan</a></li>
-                                <li><a href="#"> Vendor Detail</a></li>
-                                <li><a href="#">Affiliate</a></li>
                             </ul>
                         </div>
                     </div>
@@ -128,7 +126,7 @@
                         <nav>
                             <ul>
                                 <li><a href="#">Privacy Policy </a></li>
-                                <li><a href="blog.html"> Blog</a></li>
+                                <li><a href="#"> Blog</a></li>
                                 <li><a href="#">Help Center</a></li>
                             </ul>
                         </nav>
@@ -138,7 +136,7 @@
                     <div class="copyright f-right mrg-5">
                         <p>
                             Copyright ©
-                            <a href="https://hastech.company/">HasTech</a> 2018 . All Right Reserved.
+                            <a href="#">Easy Bazar</a> 2019 . All Right Reserved.
                         </p>
                     </div>
                 </div>

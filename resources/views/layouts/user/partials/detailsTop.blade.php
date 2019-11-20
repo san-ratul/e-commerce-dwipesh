@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> eCommerce</title>
+    <title> Easy Bazar</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -38,7 +38,7 @@
             <div class="header-bottom-wrapper">
                 <div class="logo-2 furniture-logo ptb-30">
                     <a href="{{url('/')}}">
-                        <h2 style="font-weight:bold;">{{ config('app.name', 'Laravel') }}</h2>
+                        <h2 style="font-weight:bold;">Easy Bazar</h2>
                     </a>
                 </div>
                 <div class="menu-style-2 furniture-menu menu-hover">
@@ -228,8 +228,8 @@
             <div class="furniture-bottom-wrapper">
                 <div class="furniture-login">
                     <ul>
-                        <li>Get Access: <a href="login.html">Login </a></li>
-                        <li><a href="register.html">Reg </a></li>
+                        <li>Get Access: <a href="{{route('login')}}">Login </a></li>
+                        <li><a href="{{route('register')}}">Reg </a></li>
                     </ul>
                 </div>
                 <div class="furniture-search">

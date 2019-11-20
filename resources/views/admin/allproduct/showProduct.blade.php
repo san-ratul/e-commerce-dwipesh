@@ -17,6 +17,8 @@
                   <th>Price</th>
                   <th>quantiy</th>
                   <th>Description</th>
+                  <th>color</th>
+                  <th>size</th>
                   <th>Image</th>
                   <th>Action</th>
                 </tr>
@@ -32,6 +34,8 @@
                   <td>{{$product->price}} BDT/Pcs</td>
                   <td>{{$product->quantiy}} BDT/Pcs</td>
                   <td>{{substr($product->description,0,16)}}....</td>
+                  <td>{{$product->productDetails->color}}</td>
+                  <td>{{$product->productDetails->size}}</td>
                   <td><img src="{{$product->image[0]->image}}" style="max-width:100px;"/></td>
                   <td>
                   <form action="{{route('admin.deleteproduct',$product->id)}}" method="post">

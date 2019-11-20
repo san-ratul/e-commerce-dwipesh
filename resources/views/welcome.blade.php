@@ -11,15 +11,15 @@
         <div class="section-title-4 text-center mb-40">
             <h2>Latest Products</h2>
         </div>
-        <div class="top-product-style">
+        <div class="top-product-style row">
 
             @if(isset($products) && !$products->isEmpty())
             @foreach($products as $product)
-            <div class="custom-col-style-2 custom-col-4">
+            <div class="col-md-3">
                 <div class="product-wrapper product-border mb-24">
                     <div class="product-img-3">
                         <a href="{{route('product.details',$product->id)}}">
-                            <img src="{{$product->image[0]->image}}" alt="">
+                            <img src="{{$product->image[0]->image}}" alt="" style="height:220px">
                         </a>
                     </div>
                     <div class="product-content-4 text-center">

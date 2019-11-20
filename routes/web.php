@@ -42,6 +42,9 @@ Route::middleware(['seller','sellerActive'])->group(function (){
     Route::get('/product-category/edit/{category}','ProductCategoryController@edit')->name('category.edit');
     Route::get('/product-add-product','ProductController@index')->name('product.add');
     Route::get('seller/product-show/{user}','ProductController@productShowseller')->name('seller.product');
+    Route::get('seller/product-edit/{product}','ProductController@edit')->name('product.edit');
+    Route::get('seller/profile/{user}','UserController@sellerProfile')->name('seller.profile');
+    Route::get('/seller/profile-edit/{user}','UserController@editSeller')->name('seller.profileEdit');
 
     //post methods
     Route::post('/product-category/all','ProductCategoryController@store')->name('category.add');
@@ -49,8 +52,12 @@ Route::middleware(['seller','sellerActive'])->group(function (){
     Route::post('/product-image-add','ImageController@create')->name('image.create');
     //post delete
     Route::delete('/product-category/delete/{category}','ProductCategoryController@destroy')->name('category.delete');
+    Route::delete('/product-image/delete/{image}','ProductController@destroy')->name('image.delete');
     //post patch
     Route::patch('/product-category/update/{category}','ProductCategoryController@update')->name('category.update');
+    Route::delete('/product/delete/{product}','ProductController@delete')->name('product.delete');
+    Route::patch('seller/profile-update/{user}','UserController@updateSeller')->name('seller.update');
+    Route::patch('seller/product-update/{product}','ProductController@store')->name('product.update');
 });
 Route::get('/seller/inactive','UserController@sellerInactive')->name('seller.inactive')->middleware('seller');
 
