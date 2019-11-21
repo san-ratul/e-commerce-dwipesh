@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderDetails;
+use App\Shipping;
 use App\Product;
 use Illuminate\Http\Request;
 use Cart;
+use Illuminate\Support\Collection;
 
 class OrderController extends Controller
 {
@@ -37,7 +40,72 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
+        if (isset($request->others)) {
+            $this->validate($request, [
+                's_name' => ['required'],
+                's_address_line_1' => ['required'],
+                's_phone' => ['required'],
+                'trx_id' => ['required', 'unique:orders'],
+            ]);
+        } else {
+            $this->validate($request, [
+                'address_line_1' => ['required'],
+                'trx_id' => ['required', 'unique:orders'],
+            ]);
+        }
+        // making ready productlist
+        $products = new Collection();
+        $cart_items = Cart::getContent();
+        $cart['subTotal'] = Cart::getSubTotal();
+        foreach ($cart_items as $item) {
+            $product = Product::find($item->id);
+            $product->quantity = $item->quantity;
+            $product->subTotal = $item->getPriceSum();
+            $product->color    = $item->attributes['color'];
+            $product->size     = $item->attributes['size'];
+            $products->push($product);
+        }
+
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total'   => $cart['subTotal'],
+            'trx_id'  => $request->trx_id,
+            'paid'    => $cart['subTotal'],
+            'note'    => $request->note ?? null,
+            'status'  => 'Payment Verification Pending',
+        ]);
+
+        foreach($products as $product){
+            OrderDetails::create([
+                'order_id'    => $order->id,
+                'product_id'  => $product->id,
+                'quantity'    => $product->quantity,
+                'color'       => $product->color,
+                'size'        => $product->size,
+            ]);
+        }
+
+        if (isset($request->others)) {
+            Shipping::create([
+                'order_id'=> $order->id,
+                's_name' => $request->s_name,
+                's_phone' => $request->s_phone,
+                's_address_line_1' => $request->s_address_line_1,
+                's_address_line_2' => $request->s_address_line_2,
+                'status' => 'Order Placed',
+            ]);
+        } else {
+            Shipping::create([
+                'order_id'=> $order->id,
+                's_name' => $user->name,
+                's_phone' => $user->phone,
+                's_address_line_1' => $request->address_line_1,
+                's_address_line_2' => $request->address_line_2,
+                'status' => 'Order Placed',
+            ]);
+        }
+        return redirect()->route('home')->with('status','Order Placed Successfully');
     }
 
     /**
@@ -85,9 +153,9 @@ class OrderController extends Controller
         //
     }
 
-    public function addCart(Request $request,Product $product)
+    public function addCart(Request $request, Product $product)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'quantity' => 'required|numeric|min:0|gt:0',
         ]);
 
@@ -97,47 +165,66 @@ class OrderController extends Controller
             'price' => $product->price,
             'quantity' => $request->quantity,
             'attributes' => array(
-                'size' => ($request->size != null)?$request->size: null,
-                'color' => ($request->size != null)?$request->color: null,
+                'size' => ($request->size != null) ? $request->size : null,
+                'color' => ($request->size != null) ? $request->color : null,
             )
         ));
-        return redirect()->back()->with('success','product added to cart');
+        return redirect()->back()->with('success', 'product added to cart');
     }
-    public function updateCart(Request $request,Medicine $medicine)
+    public function updateCart(Request $request, Product $product)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'quantity' => 'required|numeric|min:0|gt:0',
         ]);
-        Cart::update($medicine->id,array(
+        Cart::update($product->id, array(
             'quantity' => array(
                 'relative' => false,
                 'value' => $request->quantity,
             ),
         ));
-        return redirect()->back()->with('success','Cart Updated!');
+        return redirect()->back()->with('success', 'Cart Updated!');
     }
 
-    public function destroyCart(Request $request,Medicine $medicine)
+    public function destroyCart(Request $request, Product $product)
     {
-        Cart::remove($medicine->id);
-        return redirect()->back()->with('success','Cart Updated!');
+        Cart::remove($product->id);
+        return redirect()->back()->with('success', 'Cart Updated!');
     }
     public function showCart()
     {
-        // $cart['count'] = Cart::getContent()->count();
-        // $medicines = new Collection();
-        // $cart_items = Cart::getContent();
-        // $cart['subTotal'] = Cart::getSubTotal();
-        // foreach($cart_items as $item){
-        //     $medicine = Medicine::find($item->id);
-        //     $medicine->quantity = $item->quantity;
-        //     $medicine->subTotal = $item->getPriceSum();
-        //     $medicines->push($medicine);
-        // }
-        // $cart['shops'] = $medicines->unique('shop')->count();
-        // return view('cart.index',compact('medicines','cart'));
-
         $cart['count'] = Cart::getContent()->count();
-        return $cart_items = Cart::getContent();
+        $products = new Collection();
+        $cart_items = Cart::getContent();
+        $cart['subTotal'] = Cart::getSubTotal();
+        foreach ($cart_items as $item) {
+            $product = Product::find($item->id);
+            $product->quantity = $item->quantity;
+            $product->subTotal = $item->getPriceSum();
+            $products->push($product);
+        }
+        return view('order.cart', compact('products', 'cart'));
+    }
+    public function userCheckout($lat, $lon)
+    {
+        $cart['count'] = Cart::getContent()->count();
+        $products = new Collection();
+        $cart_items = Cart::getContent();
+        $cart['subTotal'] = Cart::getSubTotal();
+        foreach ($cart_items as $item) {
+            $product = Product::find($item->id);
+            $product->quantity = $item->quantity;
+            $product->subTotal = $item->getPriceSum();
+            $products->push($product);
+        }
+        if ($lat != 'na' || $lon != 'na') {
+            $query = $lat . ',' . $lon;
+            $geocoder = new \OpenCage\Geocoder\Geocoder('83d88a1f9eac460bb380ab54bb477a28');
+            $result = $geocoder->geocode($query); # latitude,longitude (y,x)
+            $location = $result['results'][0]['formatted'];
+        } else {
+            $location = '';
+        }
+
+        return view('order.checkout', compact('products', 'cart', 'location'));
     }
 }

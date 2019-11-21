@@ -1,4 +1,7 @@
+<?php
+    $cart['total_items'] = count(\Cart::getContent());
 
+?>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -23,6 +26,7 @@
     <link rel="stylesheet" href="{{asset('frontend/css/bundle.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="{{asset('frontend/js/vendor/modernizr-2.8.3.min.js')}}"></script>
 </head>
 

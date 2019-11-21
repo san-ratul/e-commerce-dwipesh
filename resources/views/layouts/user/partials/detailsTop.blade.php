@@ -1,3 +1,8 @@
+<?php
+    $cart['total_items'] = count(\Cart::getContent());
+    $cart['subtotal'] = \Cart::getSubTotal();
+    $cart_products = \Cart::getContent();
+?>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -23,7 +28,13 @@
     <link rel="stylesheet" href="{{asset('frontend/css/bundle.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="{{asset('frontend/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+    <style>
+        .invalid-feedback{
+            display: block;
+        }
+    </style>
 </head>
 </body>
 
@@ -40,16 +51,15 @@
                     <nav>
                         <ul>
                             <li>
-                                @if(auth()->user()->is_admin)
+                                @guest
+                                <a href="{{url('/')}}">home</a>
+                                @elseif(auth()->user()->is_admin)
                                 <a href="{{route('admin.index')}}">home</a>
                                 @elseif(auth()->user()->is_seller)
                                 <a href="{{route('seller.index')}}">home</a>
                                 @elseif(auth()->user())
                                 <a href="{{route('home')}}">home</a>
-                                @else
-                                <a href="{{url('/')}}">home</a>
-                                @endif
-
+                                @endguest
                             </li>
                             <li><a href="#">pages</a>
                                 <ul class="single-dropdown">
@@ -114,60 +124,41 @@
                     </nav>
                 </div>
                 <div class="header-cart">
-                    <a class="icon-cart-furniture" href="#">
+                    <a class="icon-cart-furniture" href="{{route('cart.show')}}">
                         <i class="ti-shopping-cart"></i>
-                        <span class="shop-count-furniture green">02</span>
+                        <span class="shop-count-furniture green">{{$cart['total_items']}} </span>
                     </a>
                     <ul class="cart-dropdown">
+                        @foreach($cart_products as $cartProduct)
                         <li class="single-product-cart">
-                            <div class="cart-img">
-                                <a href="#"><img src="{{$product->id}}" alt=""></a>
-                            </div>
                             <div class="cart-title">
-                                <h5><a href="#"> Bits Headphone</a></h5>
-                                <h6><a href="#">Black</a></h6>
-                                <span>$80.00 x 1</span>
+                                <h5><a href="{{route('product.details',$cartProduct->id)}}"> {{$cartProduct->name}}</a>
+                                </h5>
+                                <h6>Spec: {{$cartProduct->attributes['color'] ?? 'N/A'}}</h6>
+                                <span>{{$cartProduct->price}} x {{$cartProduct->quantity}} BDT</span>
                             </div>
                             <div class="cart-delete">
-                                <a href="#"><i class="ti-trash"></i></a>
+                                <form id="cart-delete-form" action="{{ route('cart.delete',$cartProduct->id) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        style="padding:0px;background:transparent;border:none;cursor:pointer; margin-top:10px; font-size:20px"><i
+                                            class="ti-trash"></i></button>
+                                </form>
                             </div>
                         </li>
-                        <li class="single-product-cart">
-                            <div class="cart-img">
-                                <a href="#"><img src="{{asset('frontend/img/cart/2.jpg')}}" alt=""></a>
-                            </div>
-                            <div class="cart-title">
-                                <h5><a href="#"> Bits Headphone</a></h5>
-                                <h6><a href="#">Black</a></h6>
-                                <span>$80.00 x 1</span>
-                            </div>
-                            <div class="cart-delete">
-                                <a href="#"><i class="ti-trash"></i></a>
-                            </div>
-                        </li>
-                        <li class="single-product-cart">
-                            <div class="cart-img">
-                                <a href="#"><img src="assets/img/cart/3.jpg" alt=""></a>
-                            </div>
-                            <div class="cart-title">
-                                <h5><a href="#"> Bits Headphone</a></h5>
-                                <h6><a href="#">Black</a></h6>
-                                <span>$80.00 x 1</span>
-                            </div>
-                            <div class="cart-delete">
-                                <a href="#"><i class="ti-trash"></i></a>
-                            </div>
-                        </li>
+                        @endforeach
                         <li class="cart-space">
                             <div class="cart-sub">
                                 <h4>Subtotal</h4>
                             </div>
                             <div class="cart-price">
-                                <h4>$240.00</h4>
+                                <h4>BDT {{$cart['subtotal']}}</h4>
                             </div>
                         </li>
                         <li class="cart-btn-wrapper">
-                            <a class="cart-btn btn-hover" href="#">view cart</a>
+                            <a class="cart-btn btn-hover" href="{{route('cart.show')}}">view cart</a>
                             <a class="cart-btn btn-hover" href="#">checkout</a>
                         </li>
                     </ul>
@@ -203,8 +194,20 @@
             <div class="furniture-bottom-wrapper">
                 <div class="furniture-login">
                     <ul>
+                        @guest
                         <li>Get Access: <a href="{{route('login')}}">Login </a></li>
                         <li><a href="{{route('register')}}">Reg </a></li>
+                        @else
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                  document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        @endguest
                     </ul>
                 </div>
                 <div class="furniture-search">
@@ -216,11 +219,6 @@
                     </form>
                 </div>
                 <div class="furniture-wishlist">
-                    <ul>
-                        <li><a data-toggle="modal" data-target="#exampleCompare" href="#"><i class="ti-reload"></i>
-                                Compare</a></li>
-                        <li><a href="wishlist.html"><i class="ti-heart"></i> Wishlist</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -245,6 +243,7 @@
 <script src="{{asset('frontend/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('frontend/js/plugins.js')}}"></script>
 <script src="{{asset('frontend/js/main.js')}}"></script>
+@yield('script')
 </body>
 
 </html>
