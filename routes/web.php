@@ -28,11 +28,16 @@ Route::middleware(['admin'])->group(function (){
     Route::get('/admin/profile/{user}','UserController@adminProfile')->name('admin.profile');
     Route::get('/admin/profile-edit/{user}','UserController@editAdmin')->name('admin.profileEdit');
     Route::get('/admin/show-product/{user}','ProductController@productShowAdmin')->name('admin.showPorduct');
+    Route::get('/admin/slider-add','sliderController@slider')->name('slider.add');
+    //post methods
+    Route::post('/admin/slider-store','sliderController@create')->name('slider.store');
+
     //patch methods
     Route::patch('admin/seller/{user}/active','UserController@activeSeller')->name('active.seller');
     Route::patch('admin/seller/{user}/deactive','UserController@deactiveSeller')->name('deactive.seller');
     Route::patch('admin/profile-update/{user}','UserController@updateAdmin')->name('admin.update');
     Route::delete('admin/delete-product/{product}','ProductController@delete')->name('admin.deleteproduct');
+    Route::delete('admin/slider-image/{slider}','sliderController@delete')->name('sliderImage.delete');
 });
 
 Route::middleware(['seller','sellerActive'])->group(function (){
@@ -49,6 +54,7 @@ Route::middleware(['seller','sellerActive'])->group(function (){
     //post methods
     Route::post('/product-category/all','ProductCategoryController@store')->name('category.add');
     Route::post('/product-add-product','ProductController@create')->name('product.store');
+    Route::post('/product-image-add','ImageController@create')->name('image.create');
     Route::post('/product-image-add','ImageController@create')->name('image.create');
     //post delete
     Route::delete('/product-category/delete/{category}','ProductCategoryController@destroy')->name('category.delete');

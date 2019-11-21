@@ -19,7 +19,14 @@
                 <ul class="sub-menu children dropdown-menu">
                     <li><i class="fa fa-table"></i><a href="{{route('admin.sellerList')}}">Products</a></li>
                 </ul>
-            </li>      
+            </li>  
+            <li class="menu-item-has-children dropdown" >
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-product-hunt"></i>Slider Management</a>
+                <ul class="sub-menu children dropdown-menu">
+                    <li><i class="fa fa-plus-picture"></i><a href="{{route('slider.add')}}">Add Slider</a></li>
+                </ul>
+            </li>    
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
