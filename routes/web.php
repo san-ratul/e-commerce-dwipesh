@@ -64,4 +64,5 @@ Route::get('/seller/inactive','UserController@sellerInactive')->name('seller.ina
 Route::middleware(['user','auth'])->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user/checkout/{lat}/{lon}', 'OrderController@userCheckout')->name('user.checkout');
+    Route::post('/user/order/place', 'OrderController@store')->name('user.order.place');
 });

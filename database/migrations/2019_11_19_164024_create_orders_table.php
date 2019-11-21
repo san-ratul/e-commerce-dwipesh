@@ -18,8 +18,11 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->integer('total');
             $table->integer('discount')->default(0);
+            $table->string('trx_id')->unique('orders');
             $table->integer('paid');
             $table->integer('due')->default(0);
+            $table->string('note')->nullable();
+            $table->string('status');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

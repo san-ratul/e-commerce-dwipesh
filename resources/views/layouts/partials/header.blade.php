@@ -9,7 +9,19 @@
             </div>
             <div class="electronics-login-register">
                 <ul>
+                    @guest
                     <li><a href="{{route('login')}}"><i class="pe-7s-users"></i>My Account</a></li>
+                    @else
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                          document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out"></i> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                    @endguest
                     <li><a href="#"><i class="pe-7s-flag"></i>BD</a></li>
                     <li><a class="border-none" href="#"><span>$</span>BDT</a></li>
                 </ul>

@@ -4,43 +4,77 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-12 col-12">
-                <form action="#">
+                <form action="{{route('user.order.place')}}" method="post" id="checkout-form">
+                    @csrf
                     <div class="checkbox-form">
                         <h3>Billing Details</h3>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Name <span class="required">*</span></label>
-                                    <input type="text" value="{{auth()->user()->name}}" disabled />
+                                    <input type="text" value="{{old('name') ?? auth()->user()->name}}" name="name" disabled required />
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Address <span class="required">*</span></label>
-                                    <input type="text" value="{{$location}}" />
+                                    <input type="text" placeholder="Apartment, suite, unit etc. (optional)" value="{{old('address_line_1')}}"
+                                        name="address_line_1" required />
+                                    @error('address_line_1')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
+                                <input type="text" value="{{$location}}" name="address_line_2" value="{{old('address_line_2')}}" required />
+                                    @error('address_line_2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Email Address <span class="required">*</span></label>
-                                    <input type="email" value="{{auth()->user()->email}}" disabled />
+                                    <input type="email" value="{{auth()->user()->email}}" name="email" value="{{old('email')}}" disabled
+                                        required />
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Phone <span class="required">*</span></label>
-                                    <input type="text" value="{{auth()->user()->phone}}" disabled />
+                                    <input type="text" value="{{auth()->user()->phone}}" name="phone"  value="{{old('phone')}}"  disabled
+                                        required />
+                                    @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Transaction ID <span class="required">*</span></label>
-                                    <input type="text" name="trx_id" />
+                                    <input type="text" name="trx_id" value="{{old('trx_id')}}" required />
+                                    @error('trx_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -48,39 +82,65 @@
                             <div class="ship-different-title">
                                 <h3>
                                     <label>Ship to Another Person?</label>
-                                    <input id="ship-box" type="checkbox" />
+                                    <input id="ship-box" type="checkbox" name="others" />
                                 </h3>
                             </div>
                             <div id="ship-box-info" class="row">
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label>Name <span class="required">*</span></label>
-                                        <input type="text" placeholder="" />
+                                        <input type="text" placeholder="" name="s_name"  value="{{old('s_name')}}" />
+                                        @error('s_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label>Address <span class="required">*</span></label>
-                                        <input type="text" placeholder="Street address" />
+                                        <input type="text" placeholder="Apartment, suite, unit etc. (optional)"
+                                            name="s_address_line_1" value="{{old('s_address_line_1')}}" />
+                                        @error('s_address_line_1')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
-                                        <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
+                                        <input type="text" placeholder="Street address" name="s_address_line_2" value="{{old('s_address_line_2')}}"/>
+                                        @error('s_address_line_2')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label>Phone <span class="required">*</span></label>
-                                        <input type="text" placeholder="Contact Number" />
+                                        <input type="text" placeholder="Contact Number" name="s_phone" value="{{old('s_phone')}}"/>
+                                        @error('s_phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="order-notes">
                                 <div class="checkout-form-list mrg-nn">
                                     <label>Order Notes</label>
-                                    <textarea id="checkout-mess" cols="30" rows="10"
-                                        placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                    <textarea id="checkout-mess" cols="30" rows="10" name="notes"
+                                        placeholder="Notes about your order, e.g. special notes for delivery.">{{old('notes')}}</textarea>
+                                    @error('notes')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -169,7 +229,8 @@
                                 </div>
                             </div>
                             <div class="order-button-payment">
-                                <input type="submit" value="Place order" />
+                                <input type="submit" value="Place order" onclick="event.preventDefault();
+                                document.getElementById('checkout-form').submit()"/>
                             </div>
                         </div>
                     </div>

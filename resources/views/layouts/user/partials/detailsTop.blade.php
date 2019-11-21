@@ -28,7 +28,13 @@
     <link rel="stylesheet" href="{{asset('frontend/css/bundle.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="{{asset('frontend/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+    <style>
+        .invalid-feedback{
+            display: block;
+        }
+    </style>
 </head>
 </body>
 
@@ -126,15 +132,19 @@
                         @foreach($cart_products as $cartProduct)
                         <li class="single-product-cart">
                             <div class="cart-title">
-                                <h5><a href="{{route('product.details',$cartProduct->id)}}"> {{$cartProduct->name}}</a></h5>
+                                <h5><a href="{{route('product.details',$cartProduct->id)}}"> {{$cartProduct->name}}</a>
+                                </h5>
                                 <h6>Spec: {{$cartProduct->attributes['color'] ?? 'N/A'}}</h6>
                                 <span>{{$cartProduct->price}} x {{$cartProduct->quantity}} BDT</span>
                             </div>
                             <div class="cart-delete">
-                                <form id="cart-delete-form" action="{{ route('cart.delete',$cartProduct->id) }}" method="POST">
+                                <form id="cart-delete-form" action="{{ route('cart.delete',$cartProduct->id) }}"
+                                    method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" style="padding:0px;background:transparent;border:none;cursor:pointer; margin-top:10px; font-size:20px"><i class="ti-trash"></i></button>
+                                    <button type="submit"
+                                        style="padding:0px;background:transparent;border:none;cursor:pointer; margin-top:10px; font-size:20px"><i
+                                            class="ti-trash"></i></button>
                                 </form>
                             </div>
                         </li>
@@ -228,8 +238,20 @@
             <div class="furniture-bottom-wrapper">
                 <div class="furniture-login">
                     <ul>
+                        @guest
                         <li>Get Access: <a href="{{route('login')}}">Login </a></li>
                         <li><a href="{{route('register')}}">Reg </a></li>
+                        @else
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                  document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out"></i> Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                        @endguest
                     </ul>
                 </div>
                 <div class="furniture-search">

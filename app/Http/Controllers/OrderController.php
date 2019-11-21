@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderDetails;
+use App\Shipping;
 use App\Product;
 use Illuminate\Http\Request;
 use Cart;
@@ -38,7 +40,72 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
+        if (isset($request->others)) {
+            $this->validate($request, [
+                's_name' => ['required'],
+                's_address_line_1' => ['required'],
+                's_phone' => ['required'],
+                'trx_id' => ['required', 'unique:orders'],
+            ]);
+        } else {
+            $this->validate($request, [
+                'address_line_1' => ['required'],
+                'trx_id' => ['required', 'unique:orders'],
+            ]);
+        }
+        // making ready productlist
+        $products = new Collection();
+        $cart_items = Cart::getContent();
+        $cart['subTotal'] = Cart::getSubTotal();
+        foreach ($cart_items as $item) {
+            $product = Product::find($item->id);
+            $product->quantity = $item->quantity;
+            $product->subTotal = $item->getPriceSum();
+            $product->color    = $item->attributes['color'];
+            $product->size     = $item->attributes['size'];
+            $products->push($product);
+        }
+
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total'   => $cart['subTotal'],
+            'trx_id'  => $request->trx_id,
+            'paid'    => $cart['subTotal'],
+            'note'    => $request->note ?? null,
+            'status'  => 'Payment Verification Pending',
+        ]);
+
+        foreach($products as $product){
+            OrderDetails::create([
+                'order_id'    => $order->id,
+                'product_id'  => $product->id,
+                'quantity'    => $product->quantity,
+                'color'       => $product->color,
+                'size'        => $product->size,
+            ]);
+        }
+
+        if (isset($request->others)) {
+            Shipping::create([
+                'order_id'=> $order->id,
+                's_name' => $request->s_name,
+                's_phone' => $request->s_phone,
+                's_address_line_1' => $request->s_address_line_1,
+                's_address_line_2' => $request->s_address_line_2,
+                'status' => 'Order Placed',
+            ]);
+        } else {
+            Shipping::create([
+                'order_id'=> $order->id,
+                's_name' => $user->name,
+                's_phone' => $user->phone,
+                's_address_line_1' => $request->address_line_1,
+                's_address_line_2' => $request->address_line_2,
+                'status' => 'Order Placed',
+            ]);
+        }
+        return redirect()->route('home')->with('status','Order Placed Successfully');
     }
 
     /**
@@ -149,12 +216,12 @@ class OrderController extends Controller
             $product->subTotal = $item->getPriceSum();
             $products->push($product);
         }
-        if($lat != 'na' || $lon != 'na'){
+        if ($lat != 'na' || $lon != 'na') {
             $query = $lat . ',' . $lon;
             $geocoder = new \OpenCage\Geocoder\Geocoder('83d88a1f9eac460bb380ab54bb477a28');
             $result = $geocoder->geocode($query); # latitude,longitude (y,x)
             $location = $result['results'][0]['formatted'];
-        }else{
+        } else {
             $location = '';
         }
 
