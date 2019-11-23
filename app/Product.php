@@ -8,8 +8,8 @@ class Product extends Model
 {
     protected $fillable = [
         'name', 'company_name','description', 'price', 'quantity', 'category_id', 'seller_id',
-    ];  
-    
+    ];
+
     public function image()
     {
         return $this->hasMany('App\Image','product_id');
@@ -23,6 +23,12 @@ class Product extends Model
     }
     public function productDetails(){
         return $this->hasOne('App\ProductDetails','product_id');
-
+    }
+    public function orderDetails(){
+        return $this->hasMany('App\OrderDetails','product_id');
+    }
+    public function rating()
+    {
+        return $this->hasManyThrough('App\ProductRating','App\OrderDetails', 'product_id', 'id');
     }
 }

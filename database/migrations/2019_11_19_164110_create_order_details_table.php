@@ -20,6 +20,9 @@ class CreateOrderDetailsTable extends Migration
             $table->string('color')->nullable();
             $table->string('size')->nullable();
             $table->integer('quantity');
+            $table->string('status')->default('Order Placed');
+            $table->bigInteger('seller_id')->unsigned();
+            $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

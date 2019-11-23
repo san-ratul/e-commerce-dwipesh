@@ -24,13 +24,23 @@
                     </div>
                     <div class="product-content-4 text-center">
                         <div class="product-rating-4">
-                            <i class="icofont icofont-star yellow"></i>
-                            <i class="icofont icofont-star yellow"></i>
-                            <i class="icofont icofont-star yellow"></i>
-                            <i class="icofont icofont-star yellow"></i>
-                            <i class="icofont icofont-star"></i>
+                            <?php
+                                $rated = floor($product->rating->average('rating'));
+                                $unrated = 5-$rated;
+                                while($rated > 0){
+                                    echo('<a class="fa fa-star" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></a>');
+                                    $rated--;
+                                }
+                                while($unrated > 0){
+                                    echo('<a class="fa fa-star-o" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></a>');
+                                    $unrated--;
+                                }
+
+                            ?>
                         </div>
-                        <h4><a href="{{route('product.details',$product->id)}}">{{substr($product->description,0,20)}}....</a></h4>
+                        <h4><a
+                                href="{{route('product.details',$product->id)}}">{{substr($product->description,0,20)}}....</a>
+                        </h4>
                         <span>{{$product->name}}</span>
                         <span>{{$product->company_name}}</span>
                         <h5>{{$product->price}} &#2547; </h5>
@@ -43,223 +53,47 @@
             @endif
         </div>
     </div>
-
-    <div class="best-selling-area pb-95">
-        <div class="section-title-4 text-center mb-60">
-            <h2>Best Selling</h2>
+    <!-- Best Selling Products -->
+    <div class="special-food-area wrapper-padding-7 pt-115 pb-115">
+        <div class="container">
+            <div class="section-title-10 text-center mb-65">
+                <h2>Best Selling Products</h2>
+                <p> This Products are mostly ordered Items in our shop </p>
+            </div>
         </div>
-        <div class="best-selling-product">
-            <div class="row no-gutters">
-                <div class="col-lg-5">
-                    <div class="best-selling-left">
-                        <div class="product-wrapper">
-                            <div class="product-img-4">
-                                <a href="#"><img src="frontend/img/product/electro/9.jpg" alt=""></a>
-                                <div class="product-action-right">
-                                    <a class="animate-top" title="Add To Cart" href="#">
-                                        <i class="pe-7s-cart"></i>
-                                    </a>
-                                    <a class="animate-left" title="Wishlist" href="#">
-                                        <i class="pe-7s-like"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-content-5 text-center">
-                                <div class="product-rating-4">
-                                    <i class="icofont icofont-star yellow"></i>
-                                    <i class="icofont icofont-star yellow"></i>
-                                    <i class="icofont icofont-star yellow"></i>
-                                    <i class="icofont icofont-star yellow"></i>
-                                    <i class="icofont icofont-star yellow"></i>
-                                </div>
-                                <h4><a href="product-details.html">desktop C27F551</a></h4>
-                                <span>Headphone</span>
-                                <h5>$133.00</h5>
-                            </div>
+        <div class="container-fluid">
+            <div class="special-food-active owl-carousel">
+                @foreach($bestSellingProducts as $bsp)
+                <?php $product = \App\Product::find($bsp->id) ?>
+                <div class="single-special-food" style="width: 258.25px;margin: 0px 10px;overflow: hidden;">
+                    <a href="{{route('product.details',$product->id)}}"><img src="{{$product->image[0]->image}}"
+                            alt="{{$product->name}}" style="width:320px;height:240px"></a>
+                    <div class="special-food-content text-center">
+                        <div class="product-rating-4">
+                            <?php
+                                $rated = floor($product->rating->average('rating'));
+                                $unrated = 5-$rated;
+                                while($rated > 0){
+                                    echo('<a class="fa fa-star" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></a>');
+                                    $rated--;
+                                }
+                                while($unrated > 0){
+                                    echo('<a class="fa fa-star-o" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></a>');
+                                    $unrated--;
+                                }
+
+                            ?>
                         </div>
+                        <h5><a href="{{route('product.details',$product->id)}}">{{substr($product->name,0,20)}}</a></h5>
+                        <p>{{substr($product->description,0,20)}}....</p>
+                        <span>{{$product->price}} &#2547;</span>
                     </div>
                 </div>
-                <div class="col-lg-7">
-                    <div class="best-selling-right">
-                        <div class="custom-container">
-                            <div class="coustom-row-3">
-                                <div class="custom-col-style-3 custom-col-3">
-                                    <div class="product-wrapper mb-6">
-                                        <div class="product-img-4">
-                                            <a href="#">
-                                                <img src="frontend/img/product/electro/10.jpg" alt="">
-                                            </a>
-                                            <div class="product-action-right">
-                                                <a class="animate-top" title="Add To Cart" href="#">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                                <a class="animate-left" title="Wishlist" href="#">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-6">
-                                            <div class="product-rating-4">
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                            </div>
-                                            <h4><a href="product-details.html">Play Station</a></h4>
-                                            <h5>$145.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="custom-col-style-3 custom-col-3">
-                                    <div class="product-wrapper mb-6">
-                                        <div class="product-img-4">
-                                            <a href="#">
-                                                <img src="frontend/img/product/electro/11.jpg" alt="">
-                                            </a>
-                                            <div class="product-action-right">
-                                                <a class="animate-top" title="Add To Cart" href="#">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                                <a class="animate-left" title="Wishlist" href="#">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-6">
-                                            <div class="product-rating-4">
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                            </div>
-                                            <h4><a href="product-details.html">Joy Stick</a></h4>
-                                            <h5>$145.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="custom-col-style-3 custom-col-3">
-                                    <div class="product-wrapper mb-6">
-                                        <div class="product-img-4">
-                                            <a href="#">
-                                                <img src="frontend/img/product/electro/12.jpg" alt="">
-                                            </a>
-                                            <div class="product-action-right">
-                                                <a class="animate-top" title="Add To Cart" href="#">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                                <a class="animate-left" title="Wishlist" href="#">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-6">
-                                            <div class="product-rating-4">
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                            </div>
-                                            <h4><a href="product-details.html">Awesome Tab</a></h4>
-                                            <h5>$145.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="custom-col-style-3 custom-col-3">
-                                    <div class="product-wrapper mb-6">
-                                        <div class="product-img-4">
-                                            <a href="#">
-                                                <img src="frontend/img/product/electro/13.jpg" alt="">
-                                            </a>
-                                            <div class="product-action-right">
-                                                <a class="animate-top" title="Add To Cart" href="#">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                                <a class="animate-left" title="Wishlist" href="#">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-6">
-                                            <div class="product-rating-4">
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star"></i>
-                                            </div>
-                                            <h4><a href="product-details.html">Trimmer C27F401</a></h4>
-                                            <h5>$145.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="custom-col-style-3 custom-col-3">
-                                    <div class="product-wrapper mb-6">
-                                        <div class="product-img-4">
-                                            <a href="#">
-                                                <img src="frontend/img/product/electro/14.jpg" alt="">
-                                            </a>
-                                            <div class="product-action-right">
-                                                <a class="animate-top" title="Add To Cart" href="#">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                                <a class="animate-left" title="Wishlist" href="#">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-6">
-                                            <div class="product-rating-4">
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                            </div>
-                                            <h4><a href="product-details.html">Timer C27F500</a></h4>
-                                            <h5>$145.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="custom-col-style-3 custom-col-3">
-                                    <div class="product-wrapper mb-6">
-                                        <div class="product-img-4">
-                                            <a href="#">
-                                                <img src="frontend/img/product/electro/15.jpg" alt="">
-                                            </a>
-                                            <div class="product-action-right">
-                                                <a class="animate-top" title="Add To Cart" href="#">
-                                                    <i class="pe-7s-cart"></i>
-                                                </a>
-                                                <a class="animate-left" title="Wishlist" href="#">
-                                                    <i class="pe-7s-like"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-6">
-                                            <div class="product-rating-4">
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star yellow"></i>
-                                                <i class="icofont icofont-star"></i>
-                                            </div>
-                                            <h4><a href="product-details.html">Joy Stick</a></h4>
-                                            <h5>$145.00</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
-
-
+    {{-- Best Selling Products end --}}
     <div class="brand-logo-area-2 wrapper-padding ptb-80">
         <div class="container-fluid">
             <div class="brand-logo-active2 owl-carousel">

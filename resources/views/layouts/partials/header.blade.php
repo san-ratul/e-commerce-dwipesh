@@ -72,15 +72,20 @@
                 <div class="mobile-menu">
                     <nav id="mobile-menu-active">
                         <ul class="menu-overflow">
-                            <li><a href="#">HOME</a>
+                            <li>
+                                @guest
+                                <a href="{{url('/')}}">home</a>
+                                @elseif(auth()->user()->is_admin)
+                                <a href="{{route('admin.index')}}">dashboard</a>
+                                @elseif(auth()->user()->is_seller)
+                                <a href="{{route('seller.index')}}">dashboard</a>
+                                @elseif(auth()->user())
+                                <a href="{{route('home')}}">dashboard</a>
+                                @endguest
                             </li>
-                            <li><a href="#">pages</a>
+                            <li><a href="{{route('shop')}}">shop</a>
                             </li>
-                            <li><a href="#">shop</a>
-
-                            </li>
-                            <li><a href="#">BLOG</a>
-                            </li>
+                            <li><a href="#"> About Us </a></li>
                             <li><a href="#"> Contact </a></li>
                         </ul>
                     </nav>

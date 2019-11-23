@@ -6,6 +6,7 @@ use App\Order;
 use App\OrderDetails;
 use App\Shipping;
 use App\Product;
+use App\ProductRating;
 use Illuminate\Http\Request;
 use Cart;
 use Illuminate\Support\Collection;
@@ -76,10 +77,11 @@ class OrderController extends Controller
             'status'  => 'Payment Verification Pending',
         ]);
 
-        foreach($products as $product){
+        foreach ($products as $product) {
             OrderDetails::create([
                 'order_id'    => $order->id,
                 'product_id'  => $product->id,
+                'seller_id'   => $product->seller_id,
                 'quantity'    => $product->quantity,
                 'color'       => $product->color,
                 'size'        => $product->size,
@@ -88,7 +90,7 @@ class OrderController extends Controller
 
         if (isset($request->others)) {
             Shipping::create([
-                'order_id'=> $order->id,
+                'order_id' => $order->id,
                 's_name' => $request->s_name,
                 's_phone' => $request->s_phone,
                 's_address_line_1' => $request->s_address_line_1,
@@ -97,7 +99,7 @@ class OrderController extends Controller
             ]);
         } else {
             Shipping::create([
-                'order_id'=> $order->id,
+                'order_id' => $order->id,
                 's_name' => $user->name,
                 's_phone' => $user->phone,
                 's_address_line_1' => $request->address_line_1,
@@ -105,7 +107,7 @@ class OrderController extends Controller
                 'status' => 'Order Placed',
             ]);
         }
-        return redirect()->route('home')->with('status','Order Placed Successfully');
+        return redirect()->route('home')->with('status', 'Order Placed Successfully');
     }
 
     /**
@@ -114,9 +116,13 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function showDetails(Order $order)
     {
-        //
+        if (auth()->user()->id == $order->user->id || auth()->user()->is_admin || auth()->user()->is_seller) {
+            return view('order.orderDetails', compact('order'));
+        } else {
+            return redirect()->abort('4o4');
+        }
     }
 
     /**
@@ -125,9 +131,63 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function updatePaymentStatus(Order $order)
     {
-        //
+        $order->status = "Payment Varified";
+        $order->save();
+        return redirect()->back()->with('status', 'Order Updated Successfully');
+    }
+
+    public function cancelPaymentStatus(Order $order)
+    {
+        $order->status = "Payment Canceled";
+        $order->save();
+        return redirect()->back()->with('error', 'Order Updated Successfully');
+    }
+
+    public function confirmOrder(OrderDetails $orderDetails)
+    {
+        $orderDetails->status = "Order Confirmed";
+        $orderDetails->save();
+        $totalProducts = count($orderDetails->order->orderDetails);
+        $confirmedProducts = 0;
+        foreach ($orderDetails->order->orderDetails as $od) {
+            if ($od->status == "Order Confirmed") {
+                $confirmedProducts += 1;
+            }
+        }
+        if ($totalProducts ==  $confirmedProducts) {
+            $orderDetails->order->status = "Order Processed:Full";
+        } else {
+            $orderDetails->order->status = "Order Processed:Partial";
+        }
+        $orderDetails->order->save();
+        return redirect()->back()->with('status', 'Order Updated Successfully');
+    }
+    public function cancelOrder(OrderDetails $orderDetails)
+    {
+        $orderDetails->status = "Order Cancled";
+        $orderDetails->save();
+        $totalProducts = count($orderDetails->order->orderDetails);
+        $canledProducts = 0;
+        foreach ($orderDetails->order->orderDetails as $od) {
+            if ($od->status == "Order Cancled") {
+                $canledProducts += 1;
+            }
+        }
+        if ($totalProducts ==  $canledProducts) {
+            $orderDetails->order->status = "Order Processed:Full";
+        } else {
+            $orderDetails->order->status = "Order Processed:Partial";
+        }
+        $orderDetails->order->save();
+        return redirect()->back()->with('status', 'Order Updated Successfully');
+    }
+    public function productShipped(OrderDetails $orderDetails)
+    {
+        $orderDetails->status = "Shipped";
+        $orderDetails->save();
+        return redirect()->back()->with('status', 'Order Updated Successfully');
     }
 
     /**
@@ -226,5 +286,20 @@ class OrderController extends Controller
         }
 
         return view('order.checkout', compact('products', 'cart', 'location'));
+    }
+    public function orderRating(Request $request, OrderDetails $orderDetail)
+    {
+        $this->validate($request, [
+            'rating' => ['required', 'min:0', 'max:5'],
+            'feedback' => ['required', 'min:5', 'max:1000'],
+        ]);
+        ProductRating::create([
+            'rating' => $request->rating,
+            'order_details_id' => $orderDetail->id,
+            'feedback' => $request->feedback,
+        ]);
+        $orderDetail->status = "Completed";
+        $orderDetail->save();
+        return redirect()->back()->with('status', 'Feedback Provided!');
     }
 }

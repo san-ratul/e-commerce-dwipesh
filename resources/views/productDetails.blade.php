@@ -52,15 +52,21 @@
                 <div class="product-details-content">
                     <h3>{{$product->name}}</h3>
                     <div class="rating-number">
-                        <div class="quick-view-rating">
-                            <i class="pe-7s-star red-star"></i>
-                            <i class="pe-7s-star red-star"></i>
-                            <i class="pe-7s-star"></i>
-                            <i class="pe-7s-star"></i>
-                            <i class="pe-7s-star"></i>
-                        </div>
+                        <?php
+                            $rated = floor($product->rating->average('rating'));
+                            $unrated = 5-$rated;
+                            while($rated > 0){
+                                echo('<a class="fa fa-star" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></a>');
+                                $rated--;
+                            }
+                            while($unrated > 0){
+                                echo('<a class="fa fa-star-o" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></a>');
+                                $unrated--;
+                            }
+
+                        ?>
                         <div class="quick-view-number">
-                            <span>2 Ratting (S)</span>
+                            <span>{{$product->rating->count('rating')}} Ratting (S)</span>
                         </div>
                     </div>
                     <div class="details-price">
@@ -126,7 +132,7 @@
                     Description
                 </a>
                 <a href="#pro-review" data-toggle="tab" role="tab" aria-selected="false">
-                    Reviews (0)
+                    Reviews ({{$product->rating->count('rating')}})
                 </a>
             </div>
             <div class="description-review-text tab-content">
@@ -134,7 +140,29 @@
                     <p>{{$product->description}}</p>
                 </div>
                 <div class="tab-pane fade" id="pro-review" role="tabpanel">
-                    <a href="#">Be the first to write your review!</a>
+                    @if(isset($product->rating))
+                    <div class="row justify-content-center">
+                        @foreach($product->rating as $rating)
+                        <div class="alert alert-info col-md-10 mt-2">
+                            <?php
+                                $rated = $rating->rating;
+                                $unrated = 5-$rated;
+                                while($rated > 0){
+                                    echo('<span class="fa fa-star" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></span>');
+                                    $rated--;
+                                }
+                                while($unrated > 0){
+                                    echo('<span class="fa fa-star-o" style="font-size: 20px;color: #ffd119 !important;margin:5px 2.5px"></span>');
+                                    $unrated--;
+                                }
+
+                            ?>
+                            <p><strong>{{$rating->orderDetails->order->user->name}}</strong> - {{$rating->feedback}}
+                                <span class="blockquote-footer">{{$rating->created_at->diffForHumans()}}</span></p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

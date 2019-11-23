@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Reason;
+use App\Order;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+
 class UserController extends Controller
 {
     /**
@@ -14,7 +18,8 @@ class UserController extends Controller
      */
     public function adminIndex()
     {
-        return view('admin.index');
+        $orders = Order::all();
+        return view('admin.index',compact('orders'));
     }
     public function sellerIndex()
     {
@@ -116,5 +121,10 @@ class UserController extends Controller
 
         return redirect()->route('seller.profile',$user->id)->with('status','Seller Updated successfully!');
     }
-    
+
+    public function showOrders()
+    {
+        return view('order.sellerIndex');
+    }
+
 }

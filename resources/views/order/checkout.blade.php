@@ -134,7 +134,7 @@
                             <div class="order-notes">
                                 <div class="checkout-form-list mrg-nn">
                                     <label>Order Notes</label>
-                                    <textarea id="checkout-mess" cols="30" rows="10" name="notes"
+                                    <textarea id="checkout-mess" cols="30" rows="10" name="note"
                                         placeholder="Notes about your order, e.g. special notes for delivery.">{{old('notes')}}</textarea>
                                     @error('notes')
                                     <span class="invalid-feedback" role="alert">

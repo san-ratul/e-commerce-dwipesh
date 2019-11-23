@@ -40,6 +40,15 @@ class User extends Authenticatable
         return $this->hasMany('App\User','user_id');
     }
     public function product(){
-        return $this->hasMany('App\Product','product_id');
+        return $this->hasMany('App\Product','seller_id');
     }
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetails::class,'seller_id');
+    }
+
 }

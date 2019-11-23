@@ -66,6 +66,19 @@
         #cellPaiChart {
             height: 160px;
         }
+
+
+        .starrr {
+            display: inline-block;
+        }
+
+        .starrr a {
+            font-size: 16px;
+            padding: 0 1px;
+            cursor: pointer;
+            color: #ffd119 !important;
+            text-decoration: none;
+        }
     </style>
 </head>
 

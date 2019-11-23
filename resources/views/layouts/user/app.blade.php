@@ -64,19 +64,35 @@
         #cellPaiChart {
             height: 160px;
         }
+
+        .dataTables_paginate.paging_simple_numbers {
+            float: right;
+        }
+
+        .starrr {
+            display: inline-block;
+        }
+
+        .starrr a {
+            font-size: 16px;
+            padding: 0 1px;
+            cursor: pointer;
+            color: #ffd119 !important;
+            text-decoration: none;
+        }
     </style>
 </head>
 
 <body>
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
-        @include('layouts.admin.partials.sideNav')
+        @include('layouts.user.partials.sideNav')
     </aside>
     <!-- /#left-panel -->
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
         <!-- Header-->
-        @include('layouts.admin.partials.header')
+        @include('layouts.user.partials.header')
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
@@ -124,6 +140,18 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="{{asset('admin/js/init/fullcalendar-init.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/datatables.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/jszip.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/vfs_fonts.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.print.min.js')}}"></script>
+    <script src="{{asset('admin/js/lib/data-table/buttons.colVis.min.js')}}"></script>
+    <script src="{{asset('admin/js/init/datatables-init.js')}}"></script>
+    <script src="{{asset('/js/starrr.js')}}"></script>
+
     <script>
         jQuery(document).ready(function(){
             var height = jQuery(document).height()-jQuery('#header').outerHeight()-jQuery('.site-footer').outerHeight();
@@ -134,6 +162,7 @@
             jQuery('.content').css('min-height',height+'px');
         });
     </script>
+    @yield('scripts')
 </body>
 
 </html>
