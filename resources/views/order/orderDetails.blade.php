@@ -15,6 +15,29 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Order By {{$order->user->name}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Email: </strong>{{$order->user->email}}</p>
+                            <p><strong>Phone: </strong>{{$order->user->phone}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Shipped To {{$order->shipped->s_name}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Phone: </strong>{{$order->shipped->s_phone}}</p>
+                            <p><strong>Address Line 1: </strong>{{$order->shipped->s_address_line_1}}</p>
+                            <p><strong>Address Line 2: </strong>{{$order->shipped->s_address_line_2}}</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">Order Details for {{$order->id}}</div>

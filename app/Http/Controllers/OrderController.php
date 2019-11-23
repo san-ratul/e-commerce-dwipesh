@@ -107,6 +107,7 @@ class OrderController extends Controller
                 'status' => 'Order Placed',
             ]);
         }
+        Cart::clear();
         return redirect()->route('home')->with('status', 'Order Placed Successfully');
     }
 

@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->orderBy('product_count', 'desc')
             ->take(7)
             ->get();
-        return view('welcome', compact('products', 'image', 'bestSellingProducts'));
+        return view('welcome', compact('products', 'bestSellingProducts'));
     }
 
     public function shop()

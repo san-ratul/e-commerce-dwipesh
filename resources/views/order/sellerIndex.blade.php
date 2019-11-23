@@ -114,6 +114,7 @@
                                                 </a>
                                             </td>
                                             <td>
+                                                <p><strong>Order ID: </strong>{{$orderDetail->order->id ?? 'N/A'}}</p>
                                                 <p><strong>Color: </strong>{{$orderDetail->color ?? 'N/A'}}</p>
                                                 <p><strong>Size: </strong>{{$orderDetail->size ?? 'N/A'}}</p>
                                                 <p><strong>Price: </strong>{{$orderDetail->product->price}} BDT</p>
@@ -140,6 +141,24 @@
                                                 <p class="text-danger text-center">{{$orderDetail->status}}</p>
                                                 @else
                                                 <p class="text-success text-center">{{$orderDetail->status}}</p>
+                                                @endif
+                                                @if($orderDetail->status == 'Completed')
+                                                <div class="starrr" style="margin-left:10px">
+                                                    <?php
+                                                        $rated = $orderDetail->rating->rating;
+                                                        $unrated = 5-$rated;
+                                                        while($rated > 0){
+                                                            echo('<a class="fa fa-star"></a>');
+                                                            $rated--;
+                                                        }
+                                                        while($unrated > 0){
+                                                            echo('<a class="fa fa-star-o"></a>');
+                                                            $unrated--;
+                                                        }
+
+                                                    ?>
+                                                </div>
+                                                <p>{{$orderDetail->rating->feedback}}</p>
                                                 @endif
                                             </td>
                                             @endif

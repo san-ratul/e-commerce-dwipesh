@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = ProductCategory::all();
-        return view('seller.product.addProduct',compact('categories','product_details'));
+        return view('seller.product.addProduct',compact('categories'));
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductController extends Controller
             'category_id' => ['required'],
             'price' => ['required'],
             'quantity' => ['required'],
-            'description' => ['required', 'string'], 
+            'description' => ['required', 'string'],
             'filename' => 'required',
             'filename.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'color' => ['string','max:255'],
@@ -52,32 +52,32 @@ class ProductController extends Controller
             'price' => $request['price'],
             'description' => $request['description'],
             'seller_id' =>$seller->id,
-            
+
         ]);
         $productDetails = ProductDetails::create([
             'color' => $request['color'],
             'size' => $request['size'],
             'model' => $request['model'],
             'product_id' =>$product->id,
-            
+
         ]);
         if($request->hasFile('filename')){
             foreach($request->file('filename') as $file){
                 $extention=$file->getClientOriginalExtension();
                 $filename=time().'.'.$extention;
-                $path = '/seller/'.$seller->name.'/product/'.$filename;  
+                $path = '/seller/'.$seller->name.'/product/'.$filename;
                 $file->move(public_path()."/seller/".$seller->name."/product/",$filename);
 
                 Image::create([
                     'image' =>$path,
                     'product_id' =>$product->id,
-                    
+
                 ]);
-            }          
+            }
         }
-        
-        
-        return redirect()->route('product.add')->with('status','Product add successfully!');	
+
+
+        return redirect()->route('product.add')->with('status','Product add successfully!');
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductController extends Controller
             'category_id' => ['required'],
             'price' => ['required'],
             'quantity' => ['required'],
-            'description' => ['required', 'string'], 
+            'description' => ['required', 'string'],
             'color' => ['string','max:255'],
             'size' => ['string','max:255'],
             'model' => ['string','max:255',],
@@ -108,30 +108,30 @@ class ProductController extends Controller
             'price' => $request['price'],
             'description' => $request['description'],
             'seller_id' =>$seller->id,
-            
+
         ]);
         $productDetails->update([
             'color' => $request['color'],
             'size' => $request['size'],
             'model' => $request['model'],
             'product_id' =>$product->id,
-            
+
         ]);
         if($request->hasFile('filename')){
             foreach($request->file('filename') as $file){
                 $extention=$file->getClientOriginalExtension();
                 $filename=time().'.'.$extention;
-                $path = '/seller/'.$seller->name.'/product/'.$filename;  
+                $path = '/seller/'.$seller->name.'/product/'.$filename;
                 $file->move(public_path()."/seller/".$seller->name."/product/",$filename);
 
                 Image::create([
                     'image' =>$path,
                     'product_id' =>$product->id,
-                    
+
                 ]);
-            }          
+            }
         }
-        
+
         return redirect()->route('product.show')->with('status','Product Update successfully!');
     }
     public function delete(Product $product)
