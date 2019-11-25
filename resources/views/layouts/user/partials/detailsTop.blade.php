@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{asset('frontend/css/pe-icon-7-stroke.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/icofont.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/meanmenu.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/css/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/easyzoom.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/bundle.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
@@ -159,9 +160,10 @@
                     </ul>
                 </div>
                 <div class="furniture-search">
-                    <form action="#">
-                        <input placeholder="I am Searching for . . ." type="text">
-                        <button>
+                    <form action="{{route('product.search')}}" method="get">
+                        @csrf
+                        <input placeholder="I am Searching for . . ." type="text" name="name">
+                        <button type="submit">
                             <i class="ti-search"></i>
                         </button>
                     </form>

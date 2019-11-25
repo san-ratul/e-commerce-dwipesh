@@ -47,8 +47,10 @@ class HomeController extends Controller
             ->orderBy('countCategory', 'desc')
             ->take(5)
             ->get();
+        $price['max'] = Product::max('price');
+        $price['min'] = Product::min('price');
         $products = Product::latest()->paginate(12);
-        return view('shop', compact('products','categories'));
+        return view('shop', compact('products','categories','price'));
     }
     public function category($slug)
     {

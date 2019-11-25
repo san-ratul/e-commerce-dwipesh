@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="breadcrumb-area pt-205 breadcrumb-padding pb-210"
-    style="background-image: url({{$products[0]->image[0]->image}})">
+    style="background-image: url({{$products[0]->image[0]->image ?? App\Slider::first()->image}});background-repeat:no-repeat; background-size: cover; background-position: center center">
     <div class="container-fluid">
         <div class="breadcrumb-content text-center">
-            <h2> Shop</h2>
+            <h2> Search Result for {{$query ?? ''}}</h2>
             <ul>
                 <li><a href="{{url('/')}}">home</a></li>
-                <li>Shop</li>
+                <li>Search Result</li>
             </ul>
         </div>
     </div>
@@ -28,6 +28,7 @@
                             </form>
                         </div>
                     </div>
+
                     <div class="sidebar-widget mb-40">
                         <h3 class="sidebar-title">Filter by Price</h3>
                         <div class="price_filter">
@@ -36,11 +37,13 @@
                                 <div class="price_slider_amount">
                                     <div class="label-input">
                                         <label>price : <span id="price-amount" style="width:100%"></span> </label>
-                                        <input type="hidden" name="name" val="{{$query ?? ''}}">
-                                        <input type="hidden" id="amount" name="price" placeholder="Add Your Price" style="width:80% !important"/>
+                                        <input type="hidden" name="name" value="{{$query}}">
+                                        <input type="hidden" id="amount" name="price" placeholder="Add Your Price"
+                                            style="width:80% !important" />
                                     </div>
                                 </div>
-                                <button type="submit"  style="padding:1px 5px;border:1px solid #333333;cursor:pointer;margin-top:2px;background:transparent">Filter</button>
+                                <button type="submit"
+                                    style="padding:1px 5px;border:1px solid #333333;cursor:pointer;margin-top:2px;background:transparent">Filter</button>
                             </form>
                         </div>
                     </div>
@@ -65,6 +68,7 @@
                         <div class="shop-product-content tab-content">
                             <div id="grid-sidebar1" class="tab-pane fade active show">
                                 <div class="row">
+                                    @if(isset($products) && !$products->isEmpty())
                                     @foreach($products as $product)
                                     <div class="col-lg-6 col-md-6 col-xl-3">
                                         <div class="product-wrapper mb-30">
@@ -98,6 +102,11 @@
                                         </div>
                                     </div>
                                     @endforeach
+                                    @else
+                                    <div class="alert alert-danger w-100 text-center">
+                                        No products found for your query <strong>{{$query ?? ''}}</strong>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -119,7 +128,7 @@ $(function() {
         range: true,
         min: parseInt('{{$price["min"] ?? "20"}}'),
         max: parseInt('{{$price["max"] ?? "5000"}}'),
-        values: [parseInt('{{$searchPrice["min"] ?? "0"}}'), parseInt('{{$searchPrice["max"] ?? $price["max"]}}')],
+        values: [parseInt('{{$searchPrice[0] ?? "0"}}'), parseInt('{{$searchPrice[1] ?? $price["max"]}}')],
         slide: function(event, ui) {
             amountprice.html("("+ui.values[0] + " - " + ui.values[1] + ") BDT");
             amount_input.val(ui.values[0] + "," + ui.values[1]);

@@ -13,7 +13,7 @@
                     <p class="user-avatar rounded-circle ec-user-avatar">{{auth()->user()->name[0]}}</p>
                 </a>
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
+                    <a class="nav-link" href="{{route('user.profileEdit',auth()->user()->id)}}"><i class="fa fa-user"></i>My Profile</a>
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                         <i class="fa fa-power-off"></i>Logout</a>

@@ -13,6 +13,8 @@
 
 Route::get('/','HomeController@welcome')->name('/');
 Route::get('/shop','HomeController@shop')->name('shop');
+Route::get('/search/product/','ProductController@productSearch')->name('product.search');
+Route::get('/search/product/range','ProductController@productSearchRange')->name('product.search.range');
 Route::get('/category/{slug}','HomeController@category')->name('category');
 Auth::routes();
 Route::get('/seller/register','UserController@sellerRegister')->name('seller.register');
@@ -85,9 +87,11 @@ Route::middleware(['user','auth'])->group(function (){
     Route::get('/user/checkout/{lat}/{lon}', 'OrderController@userCheckout')->name('user.checkout');
     Route::post('/user/order/place', 'OrderController@store')->name('user.order.place');
     Route::post('/order/rating/{orderDetail}', 'OrderController@orderRating')->name('user.product.rating');
-
+    Route::get('/profile/{user}','UserController@editUser')->name('user.profileEdit');
+    Route::patch('/profile-update/{user}','UserController@updateUser')->name('admin.update');
 });
 
 Route::middleware(['auth'])->group(function (){
     Route::get('view/order/details/{order}','OrderController@showDetails')->name('order.details');
+
 });

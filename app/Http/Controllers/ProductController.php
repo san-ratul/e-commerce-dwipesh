@@ -9,6 +9,8 @@ use App\ProductCategory;
 use App\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -151,8 +153,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $products=Product::all();
-        return view('productDetails',compact('product','products'));
+        return view('productDetails',compact('product'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -162,7 +163,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories=ProductCategory::all();
+      $categories=ProductCategory::all();
       return view('seller.product.editProduct',compact('product','categories'));
     }
 
@@ -193,5 +194,45 @@ class ProductController extends Controller
     {
         $products=Product::where('seller_id',$user->id)->get();
         return view('seller.product.productShow',compact('products','user'));
+    }
+    public function productSearch(Request $request)
+    {
+        $this->validate($request,[
+            'name' => ['required'],
+        ]);
+        $price['max'] = Product::max('price');
+        $price['min'] = Product::min('price');
+        $query = $request->name;
+        $products = Product::where('name','like','%'.$request->name.'%')->paginate(12);
+        $categories = ProductCategory::join('products', 'category_id', 'product_categories.id')
+            ->select('product_categories.id', 'product_categories.name', 'product_categories.slug', DB::raw('count("product_categories.id") as countCategory'))
+            ->groupBy('product_categories.id', 'product_categories.name', 'product_categories.slug')
+            ->orderBy('countCategory', 'desc')
+            ->take(5)
+            ->get();
+        $products->appends($request->all());
+        return view('searchProduct',compact('products','query','categories','price'));
+    }
+    public function productSearchRange(Request $request)
+    {
+        $price['max'] = Product::max('price');
+        $price['min'] = Product::min('price');
+        $searchPrice = explode(",",$request->price);
+        if($request->name != null){
+            $products = Product::where('name','like','%'.$request->name.'%')->whereBetween('price',
+            [intval($searchPrice[0]), intval($searchPrice[1])])->paginate(12);
+            $query = $request->name;
+        }else{
+            $products = Product::whereBetween('price', [intval($searchPrice[0]), intval($searchPrice[1])])->paginate(12);
+            $query = null;
+        }
+        $categories = ProductCategory::join('products', 'category_id', 'product_categories.id')
+            ->select('product_categories.id', 'product_categories.name', 'product_categories.slug', DB::raw('count("product_categories.id") as countCategory'))
+            ->groupBy('product_categories.id', 'product_categories.name', 'product_categories.slug')
+            ->orderBy('countCategory', 'desc')
+            ->take(5)
+            ->get();
+        $products->appends($request->all());
+        return view('searchProduct',compact('products','query','categories','searchPrice','price'));
     }
 }
