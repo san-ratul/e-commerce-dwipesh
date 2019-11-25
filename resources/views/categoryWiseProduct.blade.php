@@ -49,6 +49,7 @@
                         <div class="shop-product-content tab-content">
                             <div id="grid-sidebar1" class="tab-pane fade active show">
                                 <div class="row">
+                                    @if(isset($products) && !$products->isEmpty())
                                     @foreach($products as $product)
                                     <?php $product = App\Product::find($product->id)?>
                                     <div class="col-lg-6 col-md-6 col-xl-3">
@@ -83,6 +84,12 @@
                                         </div>
                                     </div>
                                     @endforeach
+
+                                    @else
+                                    <div class="alert alert-danger w-100 text-center">
+                                        No products found
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

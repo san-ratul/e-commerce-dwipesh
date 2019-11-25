@@ -11,14 +11,14 @@ $categories = App\ProductCategory::all();
             @foreach($categories as $category)
             @if($category->parent == null)
             <li>
-                <a href="#">{{$category->name}} <i class="pe-7s-angle-right"></i></a>
+                <a href="{{route('category',$category->slug)}}">{{$category->name}} <i class="pe-7s-angle-right"></i></a>
                 @if(isset($category->children) && !$category->children->isEmpty())
-                <div class="category-menu-dropdown" style="width:300px; top:-30px"> 
+                <div class="category-menu-dropdown" style="width:300px; top:-30px">
                     <div class="category-dropdown-style category-common4 mb-40">
                         <h4 class="categories-subtitle">{{$category->name}}</h4>
                         <ul>
                             @foreach($category->children as $childCategory)
-                            <li><a href="#">{{$childCategory->name}}</a></li>
+                            <li><a href="{{route('category',$childCategory->slug)}}">{{$childCategory->name}}</a></li>
                             @endforeach
                         </ul>
                     </div>
