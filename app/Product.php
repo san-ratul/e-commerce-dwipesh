@@ -29,6 +29,6 @@ class Product extends Model
     }
     public function rating()
     {
-        return $this->hasManyThrough('App\ProductRating','App\OrderDetails', 'product_id', 'id');
+        return $this->hasManyThrough('App\ProductRating','App\OrderDetails');
     }
 }
