@@ -30,7 +30,7 @@ class sliderController extends Controller
     }
     public function delete(Slider $slider){
         $slider->delete();
-        return redirect()->route('slider.add')->with('status', 'slider add successfully!');
+        return redirect()->route('slider.add')->with('status', 'slider delete successfully!');
     }
 }
 
